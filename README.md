@@ -1,3 +1,4 @@
 # Dating-Application
 Simple dating application with authorization, matching and chat
-<img width="714" height="851" alt="Architecture" src="https://github.com/user-attachments/assets/cbba8143-409f-4482-9463-322629b166a9" />
+<img width="827" height="1169" alt="Architecture" src="https://github.com/user-attachments/assets/fcc6f548-a573-4a84-8800-5601c1f9f1a9" />
+
