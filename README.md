@@ -1,6 +1,8 @@
 # Dating-Application
 Simple dating application with authorization, matching and chat
 
-Architecture of the application
-<img width="827" height="1169" alt="Architecture" src="https://github.com/user-attachments/assets/fcc6f548-a573-4a84-8800-5601c1f9f1a9" />
+# Next iteration
+Add map module
 
+Architecture of the application
+<img width="1654" height="1169" alt="Architecture" src="https://github.com/user-attachments/assets/42665c8f-5de0-45ff-b8b2-ce3d64012944" />
