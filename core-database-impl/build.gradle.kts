@@ -1,21 +1,18 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
 }
 
 android {
-    namespace = "com.example.feature_registration_impl"
+    namespace = "com.example.core_database_impl"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.feature_registration_impl"
         minSdk = 24
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -34,7 +31,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature-registration-api"))
+    implementation(project(":core-backendless-api"))
     implementation(project(":core-database-api"))
 
     implementation(libs.androidx.core.ktx)

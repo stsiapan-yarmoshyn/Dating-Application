@@ -35,8 +35,7 @@ android {
 
 dependencies {
     implementation(project(":feature-login-api"))
-    implementation(project(":feature-registration-api"))
-    implementation(project(":core-backendless-api"))
+    implementation(project(":core-database-api"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
