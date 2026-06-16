@@ -21,4 +21,17 @@ dependencyResolutionManagement {
 
 rootProject.name = "DatingApplication"
 include(":app")
- 
+include(":feature-registration-impl")
+include(":feature-registration-api")
+include(":feature-login-api")
+include(":feature-login-impl")
+include(":feature-matching-api")
+include(":feature-matching-impl")
+include(":feature-chat-api")
+include(":feature-chat-impl")
+include(":core-backendless-api")
+include(":core-backendless-impl")
+include(":core-notification-api")
+include(":core-notification-impl")
+include(":core-database-impl")
+include(":core-database-api")

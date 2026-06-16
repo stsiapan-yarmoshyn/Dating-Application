@@ -38,6 +38,14 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature-registration-api"))
+    implementation(project(":feature-login-api"))
+    implementation(project(":feature-matching-api"))
+    implementation(project(":feature-chat-api"))
+    implementation(project(":core-backendless-api"))
+    implementation(project(":core-notification-api"))
+
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
