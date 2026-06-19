@@ -4,10 +4,10 @@ import com.example.core_database_api.data.model.UserProfileModel
 import com.example.core_database_api.data.repository.UserRepositoryApi
 import javax.inject.Inject
 
-class GetUserByIdUseCase @Inject constructor(private val repository: UserRepositoryApi) {
+class SaveUserUseCase @Inject constructor(private val repository: UserRepositoryApi) {
 
-    suspend operator fun invoke(id: Int): UserProfileModel {
-        return repository.getUserById(id)
+    suspend operator fun invoke(user: UserProfileModel) {
+        repository.saveUser(user)
     }
 
 }

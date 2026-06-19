@@ -1,6 +1,8 @@
 package com.example.core_database_impl.data.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import com.example.core_database_impl.data.entity.UserProfileEntity
 
@@ -8,8 +10,11 @@ import com.example.core_database_impl.data.entity.UserProfileEntity
 interface UserDao {
 
     @Query("SELECT * FROM user_table WHERE email = :email")
-    fun getUserByEmail(email: String): UserProfileEntity
+    suspend fun getUserByEmail(email: String): UserProfileEntity
 
     @Query("SELECT * FROM user_table WHERE userId = :id")
-    fun getUserById(id: Int): UserProfileEntity
+    suspend fun getUserById(id: Int): UserProfileEntity
+
+    @Insert(onConflict = REPLACE)
+    suspend fun saveUser(userEntity: UserProfileEntity)
 }
