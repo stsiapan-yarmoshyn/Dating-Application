@@ -8,10 +8,8 @@ fun UserProfileModel.toEntity(): UserProfileEntity {
         email = this.email,
         name = this.name,
         gender = this.gender,
-        age = this.age,
         bio = this.bio,
         birthDate = this.birthDate,
-        photos = this.photos,
         searchGender = this.searchGender,
         userId = this.userId,
     )
