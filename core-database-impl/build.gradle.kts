@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core-backendless-api"))
+    implementation(project(":core-remote-api"))
     implementation(project(":core-database-api"))
 
     implementation(libs.androidx.core.ktx)

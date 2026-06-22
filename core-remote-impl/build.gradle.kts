@@ -31,8 +31,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core-backendless-api"))
 
+    implementation(project(":core-remote-api"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
