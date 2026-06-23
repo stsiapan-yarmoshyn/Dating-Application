@@ -3,7 +3,7 @@ package com.example.core_database_impl.data.mapper
 import com.example.core_database_api.data.model.UserProfileModel
 import com.example.core_database_impl.data.entity.relation.UserWithPhotos
 
-fun UserWithPhotos.toDomain(): UserProfileModel {
+internal fun UserWithPhotos.toDomain(): UserProfileModel {
     return UserProfileModel(
         email = this.user.email,
         name = this.user.name,

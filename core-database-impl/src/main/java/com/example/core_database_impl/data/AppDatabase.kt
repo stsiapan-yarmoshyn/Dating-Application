@@ -11,6 +11,6 @@ import com.example.core_database_impl.data.entity.UserProfileEntity
     ],
     version = 1
 )
-abstract class AppDatabase() : RoomDatabase() {
+internal abstract class AppDatabase() : RoomDatabase() {
     abstract fun getUserDao(): UserDao
 }

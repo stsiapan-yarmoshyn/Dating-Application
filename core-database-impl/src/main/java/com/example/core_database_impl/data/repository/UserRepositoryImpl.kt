@@ -7,7 +7,7 @@ import com.example.core_database_impl.data.mapper.toDomain
 import com.example.core_database_impl.data.mapper.toEntity
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(
+internal class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao
 ): UserRepository {
 

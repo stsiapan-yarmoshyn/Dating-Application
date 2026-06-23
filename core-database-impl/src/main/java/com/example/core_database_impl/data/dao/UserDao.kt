@@ -9,7 +9,7 @@ import com.example.core_database_impl.data.entity.UserProfileEntity
 import com.example.core_database_impl.data.entity.relation.UserWithPhotos
 
 @Dao
-interface UserDao {
+internal interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM user_table WHERE email = :email")

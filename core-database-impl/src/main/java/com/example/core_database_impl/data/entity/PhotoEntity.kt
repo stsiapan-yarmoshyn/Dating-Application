@@ -16,7 +16,7 @@ import com.example.core_database_impl.data.entity.relation.UserWithPhotos
         )
     ]
 )
-data class PhotoEntity(
+internal data class PhotoEntity(
     @PrimaryKey val photoId: String,
     val photoUrl: String,
     val photoNumber: Int,
