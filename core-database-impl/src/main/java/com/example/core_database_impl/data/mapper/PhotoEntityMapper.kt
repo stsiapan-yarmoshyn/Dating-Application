@@ -9,7 +9,7 @@ internal fun List<PhotoEntity>.toDomainPhotoList(): List<PhotoModel> {
             photoId = it.photoId,
             photoUrl = it.photoUrl,
             photoNumber = it.photoNumber,
-            userCreatorId = it.userCreatorId
+            userCreatorId = it.userCreatorId,
         )
     }
 }

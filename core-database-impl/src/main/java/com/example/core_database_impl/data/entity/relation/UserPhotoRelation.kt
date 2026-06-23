@@ -12,7 +12,7 @@ internal data class UserWithPhotos(
         parentColumn = PARENT_COLUMN,
         entityColumn = CHILD_COLUMN
     )
-    val photos: List<PhotoEntity>
+    val photos: List<PhotoEntity>,
 ) {
     companion object {
         const val PARENT_COLUMN = "userId"

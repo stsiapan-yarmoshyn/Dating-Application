@@ -12,7 +12,7 @@ import com.example.core_database_impl.data.entity.relation.UserWithPhotos
             entity = UserProfileEntity::class,
             parentColumns = [UserWithPhotos.PARENT_COLUMN],
             childColumns = [UserWithPhotos.CHILD_COLUMN],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.CASCADE,
         )
     ]
 )
