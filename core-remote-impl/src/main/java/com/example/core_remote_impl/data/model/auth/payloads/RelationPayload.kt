@@ -7,5 +7,6 @@ import com.google.gson.annotations.SerializedName
 data class RelationPayload(
     @SerializedName("parentObject") val parentObject: BackendlessRef,
     @SerializedName("relationColumn") val relationColumn: String,
-    @SerializedName("unconditional") val unconditional: List<BackendlessRef>
+    @SerializedName("unconditional") val unconditional: BackendlessRef? = null,
+    @SerializedName("unconditional") val unconditionalList: List<BackendlessRef>? = null,
 ): Payload

@@ -7,10 +7,12 @@ data class TransactionOperation(
     @SerializedName("operationType") val operationType: String,
     @SerializedName("table") val table: String,
     @SerializedName("opResultId") val opResultId: String? = null,
-    @SerializedName("payload") val payload: Payload,
+    @SerializedName("payload") val payload: Payload? = null,
+    @SerializedName("payload") val payloadList: List<Payload>? = null,
 ) {
     companion object {
         const val OPERATION_TYPE_CREATE = "CREATE"
         const val OPERATION_TYPE_SET_RELATION = "SET_RELATION"
+        const val OPERATION_TYPE_CREATE_BULK = "CREATE_BULk"
     }
 }

@@ -9,7 +9,6 @@ internal class RegisterUserUseCaseImpl @Inject constructor(
    private val userRepository: UserRepository
 ): RegisterUserUseCase {
 
-    //TODO also add photo model
     override suspend fun invoke(user: UserProfileModel) {
         userRepository.registerUser(user)
     }
