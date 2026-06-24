@@ -1,4 +1,4 @@
-package com.example.core_remote_impl.data.network.auth
+package com.example.core_remote_impl.data.util.auth
 
 import com.example.core_backendless_api.model.Payload
 import com.google.gson.JsonElement
