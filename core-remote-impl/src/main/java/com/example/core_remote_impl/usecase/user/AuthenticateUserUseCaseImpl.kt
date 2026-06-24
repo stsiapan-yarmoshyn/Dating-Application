@@ -9,8 +9,8 @@ internal class AuthenticateUserUseCaseImpl @Inject constructor(
     private val userRepository: UserRepository
 ) : AuthenticateUserUseCase {
 
-    override suspend fun invoke(user: UserProfileModel) {
-        userRepository.authenticateUser(user)
+    override suspend fun invoke(email: String, password: String) {
+        userRepository.authenticateUser(email, password)
     }
 
 }

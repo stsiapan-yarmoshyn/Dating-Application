@@ -1,11 +1,11 @@
-package com.example.core_remote_impl.data.mapper.auth
+package com.example.core_remote_impl.data.mapper.register
 
 import com.example.core_backendless_api.model.UserProfileModel
-import com.example.core_remote_impl.data.model.auth.UserProfileDto
+import com.example.core_remote_impl.data.model.register.UserProfileAuthDto
 
-fun UserProfileModel.toUserProfileDto(): UserProfileDto {
+fun UserProfileModel.toUserProfileDto(): UserProfileAuthDto {
 
-    return UserProfileDto(
+    return UserProfileAuthDto(
         password = this.password,
         email = this.email,
         gender = this.gender,

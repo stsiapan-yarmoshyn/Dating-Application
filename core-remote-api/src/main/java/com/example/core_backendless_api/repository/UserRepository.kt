@@ -6,8 +6,8 @@ interface UserRepository {
 
     suspend fun registerUser(user: UserProfileModel)
 
-    suspend fun authenticateUser(user: UserProfileModel)
+    suspend fun authenticateUser(login: String, password: String)
 
-    suspend fun deleteUser(user: UserProfileModel)
+    suspend fun deleteUser(userId: String)
 
 }
