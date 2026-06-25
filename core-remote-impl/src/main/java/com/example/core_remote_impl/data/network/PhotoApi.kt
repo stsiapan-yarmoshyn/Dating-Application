@@ -10,6 +10,6 @@ interface PhotoApi {
     @PUT("api/data/Users/deep-save")
     suspend fun appendPhotosToUser(
         @Body request: AppendPhotosRequestDto
-    ): Result<UserProfileDto>
+    ): UserProfileDto
 
 }

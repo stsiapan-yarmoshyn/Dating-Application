@@ -9,8 +9,8 @@ internal class RegisterUserUseCaseImpl @Inject constructor(
    private val userRepository: UserRepository
 ): RegisterUserUseCase {
 
-    override suspend fun invoke(user: UserProfileModel) {
-        userRepository.registerUser(user)
+    override suspend fun invoke(user: UserProfileModel): Result<UserProfileModel> {
+        return userRepository.registerUser(user)
     }
 
 }

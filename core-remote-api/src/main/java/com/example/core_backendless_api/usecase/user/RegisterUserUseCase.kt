@@ -4,6 +4,6 @@ import com.example.core_backendless_api.model.UserProfileModel
 
 interface RegisterUserUseCase {
 
-    suspend operator fun invoke(user: UserProfileModel)
+    suspend operator fun invoke(user: UserProfileModel): Result<UserProfileModel>
 
 }

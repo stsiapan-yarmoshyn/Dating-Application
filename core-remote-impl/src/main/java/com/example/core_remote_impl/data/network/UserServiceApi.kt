@@ -13,13 +13,13 @@ interface UserServiceApi {
     @PUT("api/data/Users/deep-save")
     suspend fun executeRegisterUserTransaction(
         @Body request: UserProfileDto
-    ): Result<UserProfileDto>
+    ): UserProfileDto
 
     //TODO get from headers 'user-token' value
     @POST("api/services/AuthService/loginWithRelations")
     suspend fun loginUser(
         @Body request: LoginData
-    ): Result<UserProfileDto>
+    ): UserProfileDto
 
     @DELETE("api/data/Users/{objectId}")
     suspend fun deleteUser(

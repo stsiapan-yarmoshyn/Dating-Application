@@ -9,4 +9,6 @@ data class UserProfileModel(
     val birthDate: Long,
     val photos: List<PhotoModel>,
     val searchGender: String,
+    val lastLogin: Long? = null,
+    val created: Long? = null,
 )
