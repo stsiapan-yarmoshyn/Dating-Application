@@ -2,24 +2,24 @@ package com.example.core_remote_impl.data.repository
 
 import com.example.core_backendless_api.model.UserProfileModel
 import com.example.core_backendless_api.repository.UserRepository
-import com.example.core_remote_impl.data.mapper.register.toUserProfileDto
+import com.example.core_remote_impl.data.mapper.user.toUserProfileDtoForRegistration
 import com.example.core_remote_impl.data.model.auth.LoginData
 import com.example.core_remote_impl.data.network.UserServiceApi
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val backendlessAuthApi: UserServiceApi
+    private val userServiceApi: UserServiceApi
 ): UserRepository {
 
     override suspend fun registerUser(user: UserProfileModel) {
-        backendlessAuthApi.executeRegisterUserTransaction(user.toUserProfileDto())
+        userServiceApi.executeRegisterUserTransaction(user.toUserProfileDtoForRegistration())
     }
 
-    override suspend fun authenticateUser(login: String, password: String) {
-        backendlessAuthApi.loginUser(LoginData(login, password))
+    override suspend fun loginUser(login: String, password: String) {
+        userServiceApi.loginUser(LoginData(login, password))
     }
 
     override suspend fun deleteUser(userId: String) {
-        backendlessAuthApi.deleteUser(userId)
+        userServiceApi.deleteUser(userId)
     }
 }

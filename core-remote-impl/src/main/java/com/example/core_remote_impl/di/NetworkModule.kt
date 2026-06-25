@@ -1,10 +1,8 @@
 package com.example.core_remote_impl.di
 
-import com.example.core_remote_impl.data.model.register.AuthResult
+import com.example.core_remote_impl.BuildConfig
+import com.example.core_remote_impl.data.network.PhotoApi
 import com.example.core_remote_impl.data.network.UserServiceApi
-import com.example.core_remote_impl.data.util.register.RegisterResponseDeserializer
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,25 +41,30 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGsonBuilder(): Gson {
-        return GsonBuilder()
-            .registerTypeAdapter(AuthResult::class.java, RegisterResponseDeserializer())
-            .create()
+    fun provideBackendlessAuthApi(
+        okHttpClient: OkHttpClient,
+    ): UserServiceApi {
+
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.BACKENDLESS_BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(UserServiceApi::class.java)
+
     }
 
     @Singleton
     @Provides
-    fun provideBackendlessAuthApi(
+    fun providePhotoApi(
         okHttpClient: OkHttpClient,
-        gsonBuilder: Gson,
-    ): UserServiceApi {
-
+    ): PhotoApi {
         return Retrofit.Builder()
-            .baseUrl(""/*BACKENDLESS_BASE_URL.BACKENDLESS_BASE_URL*/)
+            .baseUrl(BuildConfig.BACKENDLESS_BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(UserServiceApi::class.java)
+            .create(PhotoApi::class.java)
 
     }
 

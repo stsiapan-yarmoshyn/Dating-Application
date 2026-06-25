@@ -9,8 +9,8 @@ internal class DeleteUserUseCaseImpl @Inject constructor(
     private val userRepository: UserRepository
 ): DeleteUserUseCase {
 
-    override suspend fun invoke(user: UserProfileModel) {
-        userRepository.deleteUser(user)
+    override suspend fun invoke(userId: String) {
+        userRepository.deleteUser(userId)
     }
 
 }

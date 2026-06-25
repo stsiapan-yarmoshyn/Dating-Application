@@ -15,7 +15,7 @@ if (localPropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.example.core_backendless_impl"
+    namespace = "com.example.core_remote_impl"
     compileSdk {
         version = release(36)
     }
