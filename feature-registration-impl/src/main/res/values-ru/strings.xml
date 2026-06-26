@@ -31,4 +31,8 @@
     <string name="add_link_text">Добавить другую ссылку</string>
     <string name="delete_link_field_text">Удалить поле</string>
 
+    <string name="name_error_text">Имя должно содержать минимум 2 символа</string>
+    <string name="email_error_text">Некорректный email</string>
+    <string name="password_error_text">Пароль должен быть от 8 символов, содержать буквы, цифры и спецсимволы</string>
+
 </resources>

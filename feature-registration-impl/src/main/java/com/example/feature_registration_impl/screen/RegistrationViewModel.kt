@@ -4,6 +4,8 @@ import android.text.TextUtils
 import android.util.Patterns.EMAIL_ADDRESS
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.feature_registration_impl.R
+import com.example.feature_registration_impl.util.UiTextUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -105,15 +107,15 @@ class RegistrationViewModel @Inject constructor(
         var hasError = false
 
         if (state.name.length < 2) {
-            _state.update { it.copy(nameError = "Имя должно содержать минимум 2 символа") } //TODO вынести в константы?
+            _state.update { it.copy(nameError = UiTextUtil.StringResource(R.string.name_error_text)) }
             hasError = true
         }
         if (!isEmailValid(state.email)) {
-            _state.update { it.copy(emailError = "Некорректный email") }
+            _state.update { it.copy(emailError = UiTextUtil.StringResource(R.string.email_error_text)) }
             hasError = true
         }
         if (!isPasswordValid(state.password)) {
-            _state.update { it.copy(passwordError = "Пароль должен быть от 8 символов, содержать буквы, цифры и спецсимволы") }
+            _state.update { it.copy(passwordError = UiTextUtil.StringResource(R.string.password_error_text)) }
             hasError = true
         }
 

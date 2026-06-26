@@ -1,5 +1,7 @@
 package com.example.feature_registration_impl.screen
 
+import com.example.feature_registration_impl.util.UiTextUtil
+
 data class RegistrationUiState(
     val name: String = "",
     val email: String = "",
@@ -10,9 +12,9 @@ data class RegistrationUiState(
     val birthDateMillis: Long? = null,
     val photoUrls: List<String> = listOf(""),
     //Validation error
-    val nameError: String? = null,
-    val emailError: String? = null,
-    val passwordError: String? = null,
+    val nameError: UiTextUtil? = null,
+    val emailError: UiTextUtil? = null,
+    val passwordError: UiTextUtil? = null,
     val isFormValid: Boolean = false,
     val isLoading: Boolean = false,
 )
