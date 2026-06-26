@@ -2,28 +2,16 @@ package com.example.feature_registration_impl.screen.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuAnchorType
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -35,15 +23,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.feature_registration_impl.R
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,9 +61,9 @@ fun RegistrationScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        //Хедер
+
         Text(
-            text = "Создать аккаунт",
+            text = stringResource(R.string.register_header_text),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(bottom = 32.dp)
         )
@@ -104,7 +86,7 @@ fun RegistrationScreen(
         // Пол (Выпадающее меню ExposedDropdownMenuBox)
         GenderDropdownMenu(selectedGender) { selectedGender = it }
 
-        // Пол (Выпадающее меню ExposedDropdownMenuBox)
+        // Пол для поиска(Выпадающее меню ExposedDropdownMenuBox)
         GenderDropdownMenu(genderToFind) { genderToFind = it }
 
         // Динамический список ссылок на фото
@@ -121,13 +103,13 @@ fun RegistrationScreen(
                 .fillMaxWidth()
                 .height(50.dp)
         ) {
-            Text("Зарегистрироваться", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.register_text), style = MaterialTheme.typography.titleMedium)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         TextButton(onClick = onLoginNavigation) {
-            Text("Уже есть аккаунт? Войти", style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(R.string.already_have_account_text), style = MaterialTheme.typography.bodyMedium)
         }
 
 

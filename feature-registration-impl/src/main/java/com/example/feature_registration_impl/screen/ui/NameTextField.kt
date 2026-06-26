@@ -7,7 +7,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.feature_registration_impl.R
 
 @Composable
 fun NameTextField(
@@ -18,7 +20,7 @@ fun NameTextField(
         value = name,
         onValueChange = { onNameChange(it) },
         label = {
-            Text("Имя")
+            Text(stringResource(R.string.name_text))
         },
         singleLine = true,
         modifier = Modifier.fillMaxWidth(),

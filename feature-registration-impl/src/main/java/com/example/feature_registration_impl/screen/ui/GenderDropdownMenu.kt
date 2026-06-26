@@ -16,7 +16,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.feature_registration_impl.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,7 +27,11 @@ fun GenderDropdownMenu(
     onGenderChange: (String) -> Unit,
 ) {
     var thisGender by remember { mutableStateOf(selectedGender) }
-    val genders = listOf("Мужской", "Женский", "Другой")
+    val genders = listOf(
+        stringResource(R.string.gender_male_text),
+        stringResource(R.string.gender_female_text),
+        stringResource(R.string.gender_other_text),
+    )
     var isGenderListExpanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
@@ -39,7 +45,7 @@ fun GenderDropdownMenu(
                 onGenderChange(thisGender)
             },
             readOnly = true,
-            label = { Text("Пол") },
+            label = { Text(stringResource(R.string.gender_text)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isGenderListExpanded) },
             modifier = Modifier
                 .fillMaxWidth()

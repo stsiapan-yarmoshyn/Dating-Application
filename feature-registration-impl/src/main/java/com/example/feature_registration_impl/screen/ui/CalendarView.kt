@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.feature_registration_impl.R
 import java.text.SimpleDateFormat
@@ -41,13 +42,13 @@ fun CalendarView(
     OutlinedTextField(
         value = formatDate,
         onValueChange = {},
-        label = { Text("Дата рождения") },
+        label = { Text(stringResource(R.string.date_of_birh_text)) },
         readOnly = true,
         trailingIcon = {
             IconButton(onClick = { showDatePicker = true }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_calendar_month),
-                    contentDescription = "Выбрать дату"
+                    contentDescription = stringResource(R.string.select_date_text)
                 )
             }
         },
@@ -62,12 +63,12 @@ fun CalendarView(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
                 TextButton(onClick = { showDatePicker = false }) {
-                    Text("OK")
+                    Text(stringResource(R.string.ok_text))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDatePicker = false }) {
-                    Text("Отмена")
+                    Text(stringResource(R.string.cancel_text))
                 }
             }
         ) {

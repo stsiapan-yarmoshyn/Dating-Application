@@ -7,7 +7,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.feature_registration_impl.R
 
 @Composable
 fun BioTextField(
@@ -18,7 +20,7 @@ fun BioTextField(
     OutlinedTextField(
         value = aboutMe,
         onValueChange = { onBioChange(it) },
-        label = { Text("О себе") },
+        label = { Text(stringResource(R.string.about_text)) },
         minLines = 3,
         maxLines = 5,
         modifier = Modifier.fillMaxWidth()

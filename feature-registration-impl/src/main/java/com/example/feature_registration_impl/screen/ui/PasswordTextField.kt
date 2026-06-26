@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -32,7 +33,7 @@ fun PasswordTextField(
     OutlinedTextField(
         value = password,
         onValueChange = { onPasswordChange(it) },
-        label = { Text("Пароль") },
+        label = { Text(stringResource(R.string.password_text)) },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -42,7 +43,12 @@ fun PasswordTextField(
             } else {
                 painterResource(id = R.drawable.ic_visibility_off)
             }
-            val description = if (passwordVisible) "Скрыть пароль" else "Показать пароль"
+            val description =
+                if (passwordVisible) {
+                    stringResource(R.string.password_hide_text)
+                } else {
+                    stringResource(R.string.password_show_text)
+                }
 
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                 Icon(painter = image, contentDescription = description)

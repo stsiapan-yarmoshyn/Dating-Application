@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.feature_registration_impl.R
 
@@ -26,9 +27,8 @@ fun PhotoListView(
     onPhotoUrlAdded: (Int, String) -> Unit,
 ) {
     Column() {
-        // Динамический список ссылок на фото
         Text(
-            text = "Ссылки на фотографии",
+            text = stringResource(R.string.photo_list_text),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.align(Alignment.Start)
         )
@@ -43,7 +43,7 @@ fun PhotoListView(
                 OutlinedTextField(
                     value = url,
                     onValueChange = { onPhotoUrlAdded(index, it) },
-                    label = { Text("Ссылка на фото #${index + 1}") },
+                    label = { Text("${stringResource(R.string.photo_link_text)}${index + 1}") },
                     singleLine = true,
                     modifier = Modifier.weight(1f)
                 )
@@ -51,7 +51,7 @@ fun PhotoListView(
                     IconButton(onClick = { photoUrls.removeAt(index) }) {
                         Icon(
                             painter = painterResource(R.drawable.ic_delete),
-                            contentDescription = "Удалить поле"
+                            contentDescription = stringResource(R.string.delete_link_field_text)
                         )
                     }
                 }
@@ -65,7 +65,7 @@ fun PhotoListView(
         ) {
             Icon(painter = painterResource(R.drawable.ic_add), contentDescription = null)
             Spacer(modifier = Modifier.width(4.dp))
-            Text("Добавить еще одну ссылку")
+            Text(stringResource(R.string.add_link_text))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
