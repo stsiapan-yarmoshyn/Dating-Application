@@ -17,41 +17,27 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.feature_registration_impl.R
+import com.example.feature_registration_impl.screen.RegistrationUiEvent
+import com.example.feature_registration_impl.screen.RegistrationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrationScreen(
-    onRegistrationSuccess: () -> Unit,
-    onLoginNavigation: () -> Unit,
+//    onRegistrationSuccess: () -> Unit,
+//    onLoginNavigation: () -> Unit,
+    registrationViewModel: RegistrationViewModel = hiltViewModel(),
 ) {
 
-    var name by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
-    var aboutMe by remember { mutableStateOf("") }
-
-    var selectedGender by remember { mutableStateOf("") }
-    var genderToFind by remember { mutableStateOf("") }
-
-    val dateTimePickerState = rememberDatePickerState()
-    val photoUrls = remember { mutableStateListOf<String>() }
+    val state by registrationViewModel.state.collectAsStateWithLifecycle()
     val scrollSate = rememberScrollState()
-
-    val isFormValid = name.isNotBlank()
-            && email.contains("@")
-            && password.length >= 6
-            && selectedGender.isNotBlank()
-            && dateTimePickerState.selectedDateMillis != null
+    val dateTimePickerState = rememberDatePickerState()
 
     Column(
         modifier = Modifier
@@ -69,36 +55,43 @@ fun RegistrationScreen(
         )
 
         //Имя
-        NameTextField(name) { name = it }
+        NameTextField(state.name) { RegistrationUiEvent.NameChanged(it) }
 
         //Email
-        EmailTextField(email) { email = it }
+        EmailTextField(state.email) { RegistrationUiEvent.EmailChanged(it) }
 
         //Пароль
-        PasswordTextField(password) { password = it }
+        PasswordTextField(state.password) { RegistrationUiEvent.PasswordChanged(it) }
 
         // О себе (Многострочное поле)
-        BioTextField(aboutMe) { aboutMe = it }
+        BioTextField(state.aboutMe) { RegistrationUiEvent.AboutChanged(it) }
 
         // Дата рождения (Поле-кликер для вызова календаря)
-        CalendarView(dateTimePickerState)
+        CalendarView(dateTimePickerState) { RegistrationUiEvent.BirthDateChanged(it) }
 
         // Пол (Выпадающее меню ExposedDropdownMenuBox)
-        GenderDropdownMenu(selectedGender) { selectedGender = it }
+        GenderDropdownMenu(state.gender) { RegistrationUiEvent.GenderChanged(it) }
 
         // Пол для поиска(Выпадающее меню ExposedDropdownMenuBox)
-        GenderDropdownMenu(genderToFind) { genderToFind = it }
+        GenderDropdownMenu(state.searchGender) { RegistrationUiEvent.SearchGenderChanged(it)}
 
         // Динамический список ссылок на фото
-        PhotoListView(photoUrls) { index, url ->
-            photoUrls[index] = url
-        }
+        PhotoListView(
+            state.photoUrls,
+            onPhotoUrlChanged = { index, url ->
+                RegistrationUiEvent.PhotoUrlChanged(index, url)
+            },
+            onPhotoRemoved = { index ->
+                RegistrationUiEvent.RemovePhotoField(index)
+            },
+            onNewFiledAdded = { RegistrationUiEvent.AddPhotoField }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { if (isFormValid) onRegistrationSuccess() },
-            enabled = isFormValid,
+            onClick = { if (state.isFormValid) RegistrationUiEvent.Submit },
+            enabled = state.isFormValid,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
@@ -108,7 +101,7 @@ fun RegistrationScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        TextButton(onClick = onLoginNavigation) {
+        TextButton(onClick = {}/*onLoginNavigation*/) {
             Text(stringResource(R.string.already_have_account_text), style = MaterialTheme.typography.bodyMedium)
         }
 

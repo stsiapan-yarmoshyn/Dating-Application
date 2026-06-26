@@ -30,6 +30,7 @@ import java.util.Locale
 @Composable
 fun CalendarView(
     dateTimePickerState: DatePickerState,
+    onDateChanged: (Long?) -> Unit
 ) {
 
     var showDatePicker by remember { mutableStateOf(false) }
@@ -41,7 +42,7 @@ fun CalendarView(
 
     OutlinedTextField(
         value = formatDate,
-        onValueChange = {},
+        onValueChange = { onDateChanged(dateTimePickerState.selectedDateMillis) },
         label = { Text(stringResource(R.string.date_of_birh_text)) },
         readOnly = true,
         trailingIcon = {

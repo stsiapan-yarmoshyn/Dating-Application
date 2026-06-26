@@ -23,8 +23,10 @@ import com.example.feature_registration_impl.R
 
 @Composable
 fun PhotoListView(
-    photoUrls: MutableList<String>,
-    onPhotoUrlAdded: (Int, String) -> Unit,
+    photoUrls: List<String>,
+    onPhotoUrlChanged: (Int, String) -> Unit,
+    onPhotoRemoved: (Int) -> Unit,
+    onNewFiledAdded: () -> Unit
 ) {
     Column() {
         Text(
@@ -42,13 +44,13 @@ fun PhotoListView(
             ) {
                 OutlinedTextField(
                     value = url,
-                    onValueChange = { onPhotoUrlAdded(index, it) },
+                    onValueChange = { onPhotoUrlChanged(index, it) },
                     label = { Text("${stringResource(R.string.photo_link_text)}${index + 1}") },
                     singleLine = true,
                     modifier = Modifier.weight(1f)
                 )
                 if (photoUrls.size > 1) {
-                    IconButton(onClick = { photoUrls.removeAt(index) }) {
+                    IconButton(onClick = { onPhotoRemoved(index) }) {
                         Icon(
                             painter = painterResource(R.drawable.ic_delete),
                             contentDescription = stringResource(R.string.delete_link_field_text)
@@ -60,7 +62,7 @@ fun PhotoListView(
 
         // Кнопка добавления еще одного поля для фото
         TextButton(
-            onClick = { photoUrls.add("") },
+            onClick = { onNewFiledAdded() },
             modifier = Modifier.align(Alignment.Start)
         ) {
             Icon(painter = painterResource(R.drawable.ic_add), contentDescription = null)
