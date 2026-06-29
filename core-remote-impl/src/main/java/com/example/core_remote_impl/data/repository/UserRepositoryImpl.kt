@@ -1,7 +1,9 @@
 package com.example.core_remote_impl.data.repository
 
-import com.example.core_backendless_api.model.UserProfileModel
+import com.example.core_backendless_api.model.DomainUserProfileModel
+import com.example.core_backendless_api.model.RegistrationResponseModel
 import com.example.core_backendless_api.repository.UserRepository
+import com.example.core_remote_impl.data.mapper.user.toRegisterResponse
 import com.example.core_remote_impl.data.mapper.user.toUserProfileDtoForRegistration
 import com.example.core_remote_impl.data.mapper.user.toUserProfileModel
 import com.example.core_remote_impl.data.model.auth.LoginData
@@ -12,14 +14,14 @@ class UserRepositoryImpl @Inject constructor(
     private val userServiceApi: UserServiceApi
 ): UserRepository {
 
-    override suspend fun registerUser(user: UserProfileModel): Result<UserProfileModel> {
+    override suspend fun registerUser(user: DomainUserProfileModel): Result<RegistrationResponseModel> {
         return runCatching {
             val result = userServiceApi.executeRegisterUserTransaction(user.toUserProfileDtoForRegistration())
-            result.toUserProfileModel()
+            result.toRegisterResponse()
         }
     }
 
-    override suspend fun loginUser(login: String, password: String): Result<UserProfileModel> {
+    override suspend fun loginUser(login: String, password: String): Result<DomainUserProfileModel> {
         return runCatching {
             val result = userServiceApi.loginUser(LoginData(login, password))
             result.toUserProfileModel()

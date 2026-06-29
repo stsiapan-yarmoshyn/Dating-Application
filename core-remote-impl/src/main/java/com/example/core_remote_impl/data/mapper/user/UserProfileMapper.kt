@@ -1,10 +1,10 @@
 package com.example.core_remote_impl.data.mapper.user
 
-import com.example.core_backendless_api.model.UserProfileModel
+import com.example.core_backendless_api.model.DomainUserProfileModel
 import com.example.core_remote_impl.data.mapper.photo.toPhotDtoList
 import com.example.core_remote_impl.data.model.UserProfileDto
 
-fun UserProfileModel.toUserProfileDtoForRegistration(): UserProfileDto {
+fun DomainUserProfileModel.toUserProfileDtoForRegistration(): UserProfileDto {
 
     return UserProfileDto(
         password = this.password,

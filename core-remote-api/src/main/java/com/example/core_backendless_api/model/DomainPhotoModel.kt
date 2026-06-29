@@ -1,6 +1,6 @@
 package com.example.core_backendless_api.model
 
-data class PhotoModel(
+data class DomainPhotoModel(
     val photoUrl: String,
     val photoNumber: Int,
 )

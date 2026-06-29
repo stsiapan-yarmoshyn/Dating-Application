@@ -1,11 +1,11 @@
 package com.example.core_remote_impl.data.mapper.user
 
-import com.example.core_backendless_api.model.UserProfileModel
+import com.example.core_backendless_api.model.DomainUserProfileModel
 import com.example.core_remote_impl.data.mapper.photo.toPhotoModelList
 import com.example.core_remote_impl.data.model.UserProfileDto
 
-fun UserProfileDto.toUserProfileModel(): UserProfileModel {
-    return UserProfileModel(
+fun UserProfileDto.toUserProfileModel(): DomainUserProfileModel {
+    return DomainUserProfileModel(
         name = name,
         gender = gender,
         email = email,
