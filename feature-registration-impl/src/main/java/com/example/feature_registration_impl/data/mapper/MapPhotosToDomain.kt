@@ -1,4 +1,4 @@
-package com.example.feature_registration_impl.mapper
+package com.example.feature_registration_impl.data.mapper
 
 import com.example.feature_registration_api.model.PhotoModel
 

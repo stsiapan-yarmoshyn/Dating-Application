@@ -16,6 +16,7 @@ import com.example.feature_registration_impl.R
 @Composable
 fun EmailTextField(
     email: String,
+    emailError: String? = null,
     onEmailChange: (String) -> Unit,
 ) {
     OutlinedTextField(
@@ -26,6 +27,12 @@ fun EmailTextField(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         modifier = Modifier.fillMaxWidth()
     )
+    if (!emailError.isNullOrEmpty()) {
+        Text(
+            modifier = Modifier.padding(top = 4.dp),
+            text = emailError,
+        )
+    }
 
     Spacer(modifier = Modifier.padding(16.dp))
 }

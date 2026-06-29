@@ -1,6 +1,7 @@
 package com.example.feature_registration_impl.screen.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,18 +13,26 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.feature_registration_impl.R
+import com.example.feature_registration_impl.screen.RegistrationEffect
 import com.example.feature_registration_impl.screen.RegistrationUiEvent
 import com.example.feature_registration_impl.screen.RegistrationViewModel
 
@@ -34,75 +43,155 @@ fun RegistrationScreen(
 //    onLoginNavigation: () -> Unit,
     registrationViewModel: RegistrationViewModel = hiltViewModel(),
 ) {
-
+    val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
     val state by registrationViewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        registrationViewModel.effect.collect { effect ->
+            when(effect) {
+                is RegistrationEffect.NetworkError -> {
+                    val message = effect.message.asString(context)
+                    snackbarHostState.showSnackbar(message, actionLabel = "OK")
+                }
+                is RegistrationEffect.Success -> {
+                    //TODO -> add navigation
+                }
+            }
+        }
+    }
+
     val scrollSate = rememberScrollState()
     val dateTimePickerState = rememberDatePickerState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp)
-            .verticalScroll(scrollSate),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState)}
+    ) { paddingValues ->
 
-        Text(
-            text = stringResource(R.string.register_header_text),
-            style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(bottom = 32.dp)
-        )
+        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
 
-        //Имя
-        NameTextField(state.name) { RegistrationUiEvent.NameChanged(it) }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp)
+                    .verticalScroll(scrollSate),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-        //Email
-        EmailTextField(state.email) { RegistrationUiEvent.EmailChanged(it) }
+                Text(
+                    text = stringResource(R.string.register_header_text),
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(bottom = 32.dp)
+                )
 
-        //Пароль
-        PasswordTextField(state.password) { RegistrationUiEvent.PasswordChanged(it) }
+                //Имя
+                NameTextField(state.name, state.nameError?.asString()) {
+                    registrationViewModel.handleIntent(
+                        RegistrationUiEvent.NameChanged(
+                            it
+                        )
+                    )
+                }
 
-        // О себе (Многострочное поле)
-        BioTextField(state.aboutMe) { RegistrationUiEvent.AboutChanged(it) }
+                //Email
+                EmailTextField(state.email, state.emailError?.asString()) {
+                    registrationViewModel.handleIntent(
+                        RegistrationUiEvent.EmailChanged(
+                            it
+                        )
+                    )
+                }
 
-        // Дата рождения (Поле-кликер для вызова календаря)
-        CalendarView(dateTimePickerState) { RegistrationUiEvent.BirthDateChanged(it) }
+                //Пароль
+                PasswordTextField(state.password, state.passwordError?.asString()) {
+                    registrationViewModel.handleIntent(
+                        RegistrationUiEvent.PasswordChanged(
+                            it
+                        )
+                    )
+                }
 
-        // Пол (Выпадающее меню ExposedDropdownMenuBox)
-        GenderDropdownMenu(state.gender) { RegistrationUiEvent.GenderChanged(it) }
+                // О себе (Многострочное поле)
+                BioTextField(state.aboutMe) {
+                    registrationViewModel.handleIntent(
+                        RegistrationUiEvent.AboutChanged(
+                            it
+                        )
+                    )
+                }
 
-        // Пол для поиска(Выпадающее меню ExposedDropdownMenuBox)
-        GenderDropdownMenu(state.searchGender) { RegistrationUiEvent.SearchGenderChanged(it)}
+                // Дата рождения (Поле-кликер для вызова календаря)
+                CalendarView(dateTimePickerState) {
+                    registrationViewModel.handleIntent(
+                        RegistrationUiEvent.BirthDateChanged(
+                            it
+                        )
+                    )
+                }
 
-        // Динамический список ссылок на фото
-        PhotoListView(
-            state.photoUrls,
-            onPhotoUrlChanged = { index, url ->
-                RegistrationUiEvent.PhotoUrlChanged(index, url)
-            },
-            onPhotoRemoved = { index ->
-                RegistrationUiEvent.RemovePhotoField(index)
-            },
-            onNewFiledAdded = { RegistrationUiEvent.AddPhotoField }
-        )
+                // Пол (Выпадающее меню ExposedDropdownMenuBox)
+                GenderDropdownMenu(state.gender) {
+                    registrationViewModel.handleIntent(
+                        RegistrationUiEvent.GenderChanged(
+                            it
+                        )
+                    )
+                }
 
-        Spacer(modifier = Modifier.height(16.dp))
+                // Пол для поиска(Выпадающее меню ExposedDropdownMenuBox)
+                GenderDropdownMenu(state.searchGender) {
+                    registrationViewModel.handleIntent(
+                        RegistrationUiEvent.SearchGenderChanged(it)
+                    )
+                }
 
-        Button(
-            onClick = { if (state.isFormValid) RegistrationUiEvent.Submit },
-            enabled = state.isFormValid,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-        ) {
-            Text(stringResource(R.string.register_text), style = MaterialTheme.typography.titleMedium)
-        }
+                // Динамический список ссылок на фото
+                PhotoListView(
+                    state.photoUrls,
+                    onPhotoUrlChanged = { index, url ->
+                        registrationViewModel.handleIntent(RegistrationUiEvent.PhotoUrlChanged(index, url))
+                    },
+                    onPhotoRemoved = { index ->
+                        registrationViewModel.handleIntent(RegistrationUiEvent.RemovePhotoField(index))
+                    },
+                    onNewFiledAdded = { registrationViewModel.handleIntent(RegistrationUiEvent.AddPhotoField) }
+                )
 
-        Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-        TextButton(onClick = {}/*onLoginNavigation*/) {
-            Text(stringResource(R.string.already_have_account_text), style = MaterialTheme.typography.bodyMedium)
+                Button(
+                    onClick = {
+                        if (state.isFormValid) {
+                            registrationViewModel.handleIntent(RegistrationUiEvent.Submit)
+                        }
+                    },
+                    enabled = state.isFormValid,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                ) {
+                    Text(
+                        stringResource(R.string.register_text),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                TextButton(onClick = {}/*onLoginNavigation*/) {
+                    Text(
+                        stringResource(R.string.already_have_account_text),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
+
+            LoadingOverlay(
+                isLoading = state.isLoading,
+                modifier = Modifier.align(Alignment.Center)
+            )
+
         }
 
 

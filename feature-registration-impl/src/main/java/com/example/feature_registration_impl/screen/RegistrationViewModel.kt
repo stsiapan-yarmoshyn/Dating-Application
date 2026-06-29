@@ -1,20 +1,19 @@
 package com.example.feature_registration_impl.screen
 
-import android.text.TextUtils
 import android.util.Patterns.EMAIL_ADDRESS
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.feature_registration_api.model.PhotoModel
-import com.example.feature_registration_api.model.UserProfileModel
 import com.example.feature_registration_impl.R
-import com.example.feature_registration_impl.mapper.toFeatureModel
-import com.example.feature_registration_impl.usecase.RegisterUserUseCase
+import com.example.feature_registration_impl.data.mapper.toFeatureModel
+import com.example.feature_registration_impl.data.usecase.RegisterUserUseCase
 import com.example.feature_registration_impl.util.UiTextUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +25,9 @@ class RegistrationViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(RegistrationUiState())
     val state: StateFlow<RegistrationUiState> = _state.asStateFlow()
+
+    private val _effect = Channel<RegistrationEffect>()
+    val effect = _effect.receiveAsFlow()
 
     fun handleIntent(event: RegistrationUiEvent) {
         when (event) {
@@ -127,8 +129,20 @@ class RegistrationViewModel @Inject constructor(
         _state.update { it.copy(isLoading = true) }
 
         viewModelScope.launch(Dispatchers.IO) {
-            //TODO catch result
-            registerUserUseCase(state.toFeatureModel())
+            val result = registerUserUseCase(state.toFeatureModel())
+            result.onSuccess {
+                _effect.send(RegistrationEffect.Success)
+            }.onFailure { error ->
+                _effect.send(
+                    RegistrationEffect.NetworkError(
+                        if (error.message.isNullOrEmpty()) {
+                            UiTextUtil.StringResource(R.string.unknown_error_text)
+                        } else {
+                            UiTextUtil.DynamicString(error.message.toString())
+                        }
+                    )
+                )
+            }
         }
     }
 

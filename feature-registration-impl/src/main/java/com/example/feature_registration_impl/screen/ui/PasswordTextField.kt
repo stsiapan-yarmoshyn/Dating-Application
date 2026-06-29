@@ -25,6 +25,7 @@ import com.example.feature_registration_impl.R
 @Composable
 fun PasswordTextField(
     password: String,
+    passwordError: String? = null,
     onPasswordChange: (String) -> Unit,
 ) {
 
@@ -56,6 +57,12 @@ fun PasswordTextField(
         },
         modifier = Modifier.fillMaxWidth()
     )
+    if (!passwordError.isNullOrEmpty()) {
+        Text(
+            modifier = Modifier.padding(top = 4.dp),
+            text = passwordError,
+        )
+    }
 
     Spacer(modifier = Modifier.padding(16.dp))
 

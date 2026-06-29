@@ -14,6 +14,7 @@ import com.example.feature_registration_impl.R
 @Composable
 fun NameTextField(
     name: String,
+    nameError: String? = null,
     onNameChange: (String) -> Unit,
 ) {
     OutlinedTextField(
@@ -25,6 +26,12 @@ fun NameTextField(
         singleLine = true,
         modifier = Modifier.fillMaxWidth(),
     )
+    if (!nameError.isNullOrEmpty()) {
+        Text(
+            modifier = Modifier.padding(top = 4.dp),
+            text = nameError,
+        )
+    }
 
     Spacer(modifier = Modifier.padding(16.dp))
 }
