@@ -4,7 +4,7 @@ import com.example.core_backendless_api.model.DomainUserProfileModel
 import com.example.core_remote_impl.data.mapper.photo.toPhotDtoList
 import com.example.core_remote_impl.data.model.UserProfileDto
 
-fun DomainUserProfileModel.toUserProfileDtoForRegistration(): UserProfileDto {
+internal fun DomainUserProfileModel.toUserProfileDtoForRegistration(): UserProfileDto {
 
     return UserProfileDto(
         password = this.password,

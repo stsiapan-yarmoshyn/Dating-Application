@@ -2,7 +2,7 @@ package com.example.core_remote_impl.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class UserProfileDto(
+internal data class UserProfileDto(
     @SerializedName("password") val password: String,
     @SerializedName("email") val email: String,
     @SerializedName("gender") val gender: String,

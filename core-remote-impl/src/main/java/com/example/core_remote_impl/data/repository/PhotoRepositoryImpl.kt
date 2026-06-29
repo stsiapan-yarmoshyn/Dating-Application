@@ -8,7 +8,7 @@ import com.example.core_remote_impl.data.mapper.user.toUserProfileModel
 import com.example.core_remote_impl.data.network.PhotoApi
 import javax.inject.Inject
 
-class PhotoRepositoryImpl @Inject constructor(
+internal class PhotoRepositoryImpl @Inject constructor(
     private val photoApi: PhotoApi
 ) : PhotoRepository {
 

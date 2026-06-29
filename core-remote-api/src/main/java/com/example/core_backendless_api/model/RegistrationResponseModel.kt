@@ -1,5 +1,6 @@
 package com.example.core_backendless_api.model
 
-data class RegistrationResponseModel(
+@JvmInline
+value class RegistrationResponseModel(
     val userId: String,
 )

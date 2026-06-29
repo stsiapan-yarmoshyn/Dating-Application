@@ -10,7 +10,7 @@ import com.example.core_remote_impl.data.model.auth.LoginData
 import com.example.core_remote_impl.data.network.UserServiceApi
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(
+internal class UserRepositoryImpl @Inject constructor(
     private val userServiceApi: UserServiceApi
 ): UserRepository {
 

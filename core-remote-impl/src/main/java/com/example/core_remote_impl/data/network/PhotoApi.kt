@@ -5,7 +5,7 @@ import com.example.core_remote_impl.data.model.UserProfileDto
 import retrofit2.http.Body
 import retrofit2.http.PUT
 
-interface PhotoApi {
+internal interface PhotoApi {
 
     @PUT("api/data/Users/deep-save")
     suspend fun appendPhotosToUser(
