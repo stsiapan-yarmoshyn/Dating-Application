@@ -4,7 +4,11 @@ import android.text.TextUtils
 import android.util.Patterns.EMAIL_ADDRESS
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.feature_registration_api.model.PhotoModel
+import com.example.feature_registration_api.model.UserProfileModel
 import com.example.feature_registration_impl.R
+import com.example.feature_registration_impl.mapper.toFeatureModel
+import com.example.feature_registration_impl.usecase.RegisterUserUseCase
 import com.example.feature_registration_impl.util.UiTextUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -123,7 +127,8 @@ class RegistrationViewModel @Inject constructor(
         _state.update { it.copy(isLoading = true) }
 
         viewModelScope.launch(Dispatchers.IO) {
-            registerUserUseCase(UserModel) //TODO
+            //TODO catch result
+            registerUserUseCase(state.toFeatureModel())
         }
     }
 
