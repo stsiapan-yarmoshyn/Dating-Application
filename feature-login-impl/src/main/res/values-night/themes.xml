@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Базовая тема приложения, обновленная до Material 3 -->
     <style name="Theme.DatingApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Основной цвет бренда -->

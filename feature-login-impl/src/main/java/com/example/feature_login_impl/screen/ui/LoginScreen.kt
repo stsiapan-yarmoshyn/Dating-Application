@@ -1,0 +1,61 @@
+package com.example.feature_login_impl.screen.ui
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.feature_login_impl.R
+import com.example.feature_login_impl.screen.LoginEvent
+import com.example.feature_login_impl.screen.LoginViewModel
+
+@Composable
+fun LoginScreen(
+    loginViewModel: LoginViewModel = hiltViewModel(),
+) {
+
+    val state by loginViewModel.state.collectAsStateWithLifecycle()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Заголовок экрана
+        Text(
+            text = stringResource(R.string.welcome_text),
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(bottom = 32.dp)
+        )
+
+        // Поле ввода email
+        EmailTextField(state.email, state.isLoading) {
+            loginViewModel.handleEvent(LoginEvent.EmailChanged(it))
+        }
+
+        //Поле ввода пароля
+        PasswordTextField(state.password, state.isLoading) {
+            loginViewModel.handleEvent(LoginEvent.PasswordChanged(it))
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Кнопка входа с индикатором загрузки
+        LoginBtnWithCircularProgress(state.isButtonEnabled, state.isLoading) {
+            loginViewModel.handleEvent(LoginEvent.LoginButtonClicked)
+        }
+    }
+}
