@@ -7,6 +7,4 @@ data class LoginUIState(
     val password: String = "",
     val isLoading: Boolean = false,
     val isButtonEnabled: Boolean = false,
-    val isLoginSuccess: Boolean = false,
-    val errorMessage: UiTextUtil? = null
 )

@@ -13,4 +13,6 @@
     <string name="password_icon_description">Password icon</string>
 
     <string name="enter_btn_text">Enter</string>
+
+    <string name="unknown_error_text">Unknown error</string>
 </resources>

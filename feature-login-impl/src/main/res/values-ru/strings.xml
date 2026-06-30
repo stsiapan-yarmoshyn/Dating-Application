@@ -13,4 +13,6 @@
     <string name="password_icon_description">Иконка пароля</string>
 
     <string name="enter_btn_text">Войти</string>
+
+    <string name="unknown_error_text">Неизвестная ошибка</string>
 </resources>
