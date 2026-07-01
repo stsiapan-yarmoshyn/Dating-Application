@@ -1,12 +1,13 @@
 package com.example.core_remote_impl.data.mapper.user
 
-import com.example.core_backendless_api.model.DomainUserProfileModel
+import com.example.core_backendless_api.model.RemoteUserProfileModel
 import com.example.core_remote_impl.data.mapper.photo.toPhotDtoList
-import com.example.core_remote_impl.data.model.UserProfileDto
+import com.example.core_remote_impl.data.model.UserRequestDto
+import com.example.core_remote_impl.data.model.UserResponseDto
 
-internal fun DomainUserProfileModel.toUserProfileDtoForRegistration(): UserProfileDto {
+internal fun RemoteUserProfileModel.toUserRequestDto(): UserRequestDto {
 
-    return UserProfileDto(
+    return UserRequestDto(
         password = this.password,
         email = this.email,
         gender = this.gender,
@@ -14,7 +15,7 @@ internal fun DomainUserProfileModel.toUserProfileDtoForRegistration(): UserProfi
         bio = this.bio,
         searchGender = this.searchGender,
         name = this.name,
-        photos = this.photos.toPhotDtoList()
+        photos = this.photos.toPhotDtoList(),
     )
 
 }

@@ -1,7 +1,7 @@
 package com.example.core_remote_impl.usecase.photo
 
-import com.example.core_backendless_api.model.DomainPhotoModel
-import com.example.core_backendless_api.model.DomainUserProfileModel
+import com.example.core_backendless_api.model.RemotePhotoModel
+import com.example.core_backendless_api.model.RemoteUserProfileModel
 import com.example.core_backendless_api.repository.PhotoRepository
 import com.example.core_backendless_api.usecase.photo.AppendPhotosUseCase
 import javax.inject.Inject
@@ -11,9 +11,9 @@ internal class AppendPhotosUseCaseImpl @Inject constructor(
 ): AppendPhotosUseCase {
 
     override suspend operator fun invoke(
-        photos: List<DomainPhotoModel>,
+        photos: List<RemotePhotoModel>,
         userId: String,
-    ): Result<DomainUserProfileModel> {
+    ): Result<RemoteUserProfileModel> {
         return photoRepository.appendPhotosForUser(photos, userId)
     }
 
