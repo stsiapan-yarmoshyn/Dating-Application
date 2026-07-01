@@ -12,6 +12,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -19,19 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.feature_registration_impl.R
+import com.example.feature_registration_impl.util.UiTextUtil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GenderDropdownMenu(
     selectedGender: String,
-    onGenderChange: (String) -> Unit,
+    genders: List<Int>,
+    onGenderChange: (UiTextUtil) -> Unit,
 ) {
-    var thisGender by remember { mutableStateOf(selectedGender) }
-    val genders = listOf(
-        stringResource(R.string.gender_male_text),
-        stringResource(R.string.gender_female_text),
-        stringResource(R.string.gender_other_text),
-    )
     var isGenderListExpanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
@@ -40,9 +37,9 @@ fun GenderDropdownMenu(
         modifier = Modifier.fillMaxWidth()
     ) {
         OutlinedTextField(
-            value = thisGender,
+            value = selectedGender,
             onValueChange = {
-                onGenderChange(thisGender)
+
             },
             readOnly = true,
             label = { Text(stringResource(R.string.gender_text)) },
@@ -57,9 +54,9 @@ fun GenderDropdownMenu(
         ) {
             genders.forEach { gender ->
                 DropdownMenuItem(
-                    text = { Text(gender) },
+                    text = { Text(stringResource(gender)) },
                     onClick = {
-                        thisGender = gender
+                        onGenderChange(UiTextUtil.StringResource(gender))
                         isGenderListExpanded = false
                     }
                 )

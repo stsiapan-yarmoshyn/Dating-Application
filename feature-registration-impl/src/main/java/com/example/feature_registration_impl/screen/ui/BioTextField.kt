@@ -19,7 +19,7 @@ fun BioTextField(
 
     OutlinedTextField(
         value = aboutMe,
-        onValueChange = { onBioChange(it) },
+        onValueChange = onBioChange,
         label = { Text(stringResource(R.string.about_text)) },
         minLines = 3,
         maxLines = 5,

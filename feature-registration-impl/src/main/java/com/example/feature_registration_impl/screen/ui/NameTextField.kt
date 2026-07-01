@@ -19,7 +19,7 @@ fun NameTextField(
 ) {
     OutlinedTextField(
         value = name,
-        onValueChange = { onNameChange(it) },
+        onValueChange = onNameChange,
         label = {
             Text(stringResource(R.string.name_text))
         },

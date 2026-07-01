@@ -33,7 +33,7 @@ fun PasswordTextField(
 
     OutlinedTextField(
         value = password,
-        onValueChange = { onPasswordChange(it) },
+        onValueChange = onPasswordChange,
         label = { Text(stringResource(R.string.password_text)) },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),

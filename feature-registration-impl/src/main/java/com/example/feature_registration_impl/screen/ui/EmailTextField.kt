@@ -21,7 +21,7 @@ fun EmailTextField(
 ) {
     OutlinedTextField(
         value = email,
-        onValueChange = { onEmailChange(it) },
+        onValueChange = onEmailChange,
         label = { Text(stringResource(R.string.email_text)) },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),

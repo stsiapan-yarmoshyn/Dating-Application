@@ -29,78 +29,101 @@ class RegistrationViewModel @Inject constructor(
     private val _effect = Channel<RegistrationEffect>()
     val effect = _effect.receiveAsFlow()
 
+    val genderList: List<Int> = listOf(
+        R.string.gender_male_text,
+        R.string.gender_female_text,
+        R.string.gender_other_text
+    )
+
     fun handleIntent(event: RegistrationUiEvent) {
         when (event) {
-            is RegistrationUiEvent.AboutChanged -> {
-                _state.update { it.copy(aboutMe = event.about) }
-                validateForm()
-            }
+            is RegistrationUiEvent.AboutChanged -> updateAbout(event.about)
 
-            RegistrationUiEvent.AddPhotoField -> {
-                _state.update { it.copy(photoUrls = it.photoUrls + "") }
-                validateForm()
-            }
+            is RegistrationUiEvent.BirthDateChanged -> updateBirthday(event.millis)
 
-            is RegistrationUiEvent.BirthDateChanged -> {
-                _state.update { it.copy(birthDateMillis = event.millis) }
-                validateForm()
-            }
+            is RegistrationUiEvent.EmailChanged -> updateEmail(event.email)
 
-            is RegistrationUiEvent.EmailChanged -> {
-                _state.update { it.copy(email = event.email) }
-                validateForm()
-            }
+            is RegistrationUiEvent.GenderChanged -> updateGender(event.gender)
 
-            is RegistrationUiEvent.GenderChanged -> {
-                _state.update { it.copy(gender = event.gender) }
-                validateForm()
-            }
+            is RegistrationUiEvent.SearchGenderChanged -> updateSearchGender(event.gender)
 
+            is RegistrationUiEvent.NameChanged -> updateName(event.name)
 
-            is RegistrationUiEvent.SearchGenderChanged -> {
-                _state.update { it.copy(searchGender = event.gender) }
-                validateForm()
-            }
+            is RegistrationUiEvent.PhotoUrlChanged -> updatePhotoUrl(event.index, event.url)
 
-            is RegistrationUiEvent.NameChanged -> {
-                _state.update { it.copy(name = event.name) }
-                validateForm()
-            }
+            is RegistrationUiEvent.AddPhotoField -> addPhotoField()
 
-            is RegistrationUiEvent.PhotoUrlChanged -> {
-                _state.update { state ->
-                    val newList =
-                        state.photoUrls.toMutableList().apply { set(event.index, event.url) }
-                    state.copy(photoUrls = newList)
-                }
-                validateForm()
-            }
+            is RegistrationUiEvent.RemovePhotoField -> removePhotoField(event.index)
 
-            is RegistrationUiEvent.RemovePhotoField -> {
-                _state.update { state ->
-                    val newList = state.photoUrls.toMutableList().apply { removeAt(event.index) }
-                    state.copy(photoUrls = newList)
-                }
-                validateForm()
-            }
+            is RegistrationUiEvent.PasswordChanged -> updatePassword(event.password)
 
-            is RegistrationUiEvent.PasswordChanged -> {
-                _state.update { it.copy(password = event.password) }
-                validateForm()
-            }
-
-            RegistrationUiEvent.Submit -> {
-                registerUser()
-            }
+            is RegistrationUiEvent.Submit -> registerUser()
         }
+    }
+
+    private fun updateAbout(about: String) {
+        _state.update { it.copy(aboutMe = about) }
+        validateForm()
+    }
+
+    private fun updateBirthday(millis: Long?) {
+        _state.update { it.copy(birthDateMillis = millis) }
+        validateForm()
+    }
+
+    private fun updateGender(gender: String) {
+        _state.update { it.copy(gender = gender) }
+        validateForm()
+    }
+
+    private fun updateSearchGender(gender: String) {
+        _state.update { it.copy(searchGender = gender) }
+        validateForm()
+    }
+
+    private fun updateEmail(email: String) {
+        _state.update { it.copy(email = email) }
+        validateForm()
+    }
+
+    private fun updatePassword(password: String) {
+        _state.update { it.copy(password = password) }
+        validateForm()
+    }
+
+    private fun updateName(name: String) {
+        _state.update { it.copy(name = name) }
+        validateForm()
+    }
+
+    private fun addPhotoField() {
+        _state.update { it.copy(photoUrls = it.photoUrls + "") }
+        validateForm()
+    }
+
+    private fun removePhotoField(index: Int) {
+        _state.update { state ->
+            val newList = state.photoUrls.toMutableList().apply { removeAt(index) }
+            state.copy(photoUrls = newList)
+        }
+        validateForm()
+    }
+
+    private fun updatePhotoUrl(index: Int, url: String) {
+        _state.update { state ->
+            val newList =
+                state.photoUrls.toMutableList().apply { set(index, url) }
+            state.copy(photoUrls = newList)
+        }
+        validateForm()
     }
 
     private fun validateForm() {
         val state = _state.value
         val isValid = state.name.isNotBlank() &&
                 state.email.contains("@") &&
-                state.password.isNotBlank()
-        state.gender.isNotBlank() &&
+                state.password.isNotBlank() &&
+                state.gender.isNotBlank() &&
                 state.searchGender.isNotBlank() &&
                 state.birthDateMillis != null
 
