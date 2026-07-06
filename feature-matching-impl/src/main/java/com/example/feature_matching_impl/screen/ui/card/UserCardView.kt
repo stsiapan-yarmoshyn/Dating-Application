@@ -55,6 +55,7 @@ fun UserCardView(
             .clip(RoundedCornerShape(32.dp))
             .background(Color.Black)
     ) {
+
         PhotoListView(
             photoList = user.photos,
             currentImageIndex = imageIndex,

@@ -32,7 +32,7 @@ fun PhotoView(
     }
 
     Box(
-        modifier = Modifier.fillMaxHeight().fillMaxWidth()
+        modifier = Modifier.fillMaxSize()
     ) {
         GlideImage(
             model = imageModel,

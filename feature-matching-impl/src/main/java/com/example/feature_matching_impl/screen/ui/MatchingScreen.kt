@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.feature_matching_api.model.PhotoModel
 import com.example.feature_matching_api.model.UserProfileModel
+import com.example.feature_matching_impl.screen.MatchingViewModel
 import com.example.feature_matching_impl.util.LightAndDarkPreview
 import com.example.feature_matching_impl.screen.ui.card.UserCardView
 import com.example.feature_matching_impl.screen.ui.footer.FooterView
@@ -32,7 +34,7 @@ val user = UserProfileModel(
 
 @Composable
 fun MatchingScreen(
-
+    matchingViewModel: MatchingViewModel = hiltViewModel()
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
