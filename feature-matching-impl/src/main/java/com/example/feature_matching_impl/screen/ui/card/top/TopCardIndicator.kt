@@ -1,4 +1,4 @@
-package com.example.feature_matching_impl.screen.ui.card
+package com.example.feature_matching_impl.screen.ui.card.top
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

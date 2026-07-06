@@ -8,6 +8,7 @@ import com.example.feature_matching_api.model.UserProfileModel
 import com.example.feature_matching_impl.screen.LightAndDarkPreview
 import com.example.feature_matching_impl.screen.ui.card.UserCardView
 import com.example.feature_matching_impl.screen.ui.footer.FooterView
+import com.example.feature_matching_impl.screen.ui.header.HeaderView
 
 val user = UserProfileModel(
     name = "",

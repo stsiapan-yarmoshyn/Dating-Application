@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import com.example.feature_matching_api.model.UserProfileModel
 import com.example.feature_matching_impl.screen.LightAndDarkPreview
 import com.example.feature_matching_impl.screen.ui.card.bottom.BottomInfoView
+import com.example.feature_matching_impl.screen.ui.card.photo.PhotoView
+import com.example.feature_matching_impl.screen.ui.card.top.TopCardIndicator
 
 
 val user = UserProfileModel(
