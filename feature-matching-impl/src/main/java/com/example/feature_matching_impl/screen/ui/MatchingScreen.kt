@@ -1,9 +1,14 @@
 package com.example.feature_matching_impl.screen.ui
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.feature_matching_api.model.PhotoModel
 import com.example.feature_matching_api.model.UserProfileModel
 import com.example.feature_matching_impl.util.LightAndDarkPreview
 import com.example.feature_matching_impl.screen.ui.card.UserCardView
@@ -17,7 +22,11 @@ val user = UserProfileModel(
     password = "",
     bio = "",
     birthDate = 0,
-    photos = emptyList(),
+    photos = listOf(
+        PhotoModel("https://www.pinterest.com/pin/1112389176725261629/", 0),
+        PhotoModel("https://www.pinterest.com/pin/724938871281092307/", 1),
+        PhotoModel("https://www.pinterest.com/pin/1040401951444441178/", 2)
+    ),
     searchGender = ""
 )
 
@@ -26,7 +35,8 @@ fun MatchingScreen(
 
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
 
         HeaderView(
@@ -35,19 +45,24 @@ fun MatchingScreen(
             onMatchingClick = {}
         )
 
-        UserCardView(
-            user = user,
-            onLikeSwipe = {},
-            onDislikeSwipe = {},
-            onInfoClick = {},
-            onCardClick = {}
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            contentAlignment = Alignment.Center
+        ) {
+            UserCardView(
+                user = user,
+                onLikeSwipe = {},
+                onDislikeSwipe = {},
+                onInfoClick = {},
+            )
+        }
 
         FooterView(
             onDiscardClick = {},
             onLikeClick = {}
         )
-
     }
 }
 

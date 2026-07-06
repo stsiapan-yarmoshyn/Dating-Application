@@ -16,39 +16,40 @@ import androidx.compose.ui.unit.dp
 import com.example.feature_matching_impl.util.LightAndDarkPreview
 
 @Composable
-fun TopCardIndicator() {
-    Row(
+fun TopCardIndicator(
+    currentImageIndex: Int = 0,
+    photoSize: Int
+) {
+    Row (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(vertical = 12.dp, horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .height(4.dp)
-                .clip(CircleShape)
-                .background(Color.White)
-        )
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .height(4.dp)
-                .clip(CircleShape)
-                .background(Color.White.copy(alpha = 0.4f))
-        )
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .height(4.dp)
-                .clip(CircleShape)
-                .background(Color.White.copy(alpha = 0.4f))
-        )
+        repeat(photoSize) { index ->
+
+            val isSelected = index == currentImageIndex
+
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(4.dp)
+                    .clip(CircleShape)
+                    .background(
+                        if (isSelected)
+                            Color.White
+                        else
+                            Color.White.copy(alpha = 0.4f)
+                    )
+            ){}
+        }
     }
 }
 
 @LightAndDarkPreview
 @Composable
 fun TopCardPreview(){
-    TopCardIndicator()
+    TopCardIndicator(
+        photoSize = 5
+    )
 }

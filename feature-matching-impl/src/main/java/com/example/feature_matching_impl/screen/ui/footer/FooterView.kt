@@ -18,11 +18,12 @@ import com.example.feature_matching_impl.util.LightAndDarkPreview
 
 @Composable
 fun FooterView(
+    modifier: Modifier = Modifier,
     onDiscardClick: () -> Unit,
     onLikeClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 24.dp),
         horizontalArrangement = Arrangement.Center,
