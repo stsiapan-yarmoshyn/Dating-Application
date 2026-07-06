@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.feature_matching_api.model.UserProfileModel
-import com.example.feature_matching_impl.screen.LightAndDarkPreview
+import com.example.feature_matching_impl.util.LightAndDarkPreview
 import com.example.feature_matching_impl.screen.ui.card.UserCardView
 import com.example.feature_matching_impl.screen.ui.footer.FooterView
 import com.example.feature_matching_impl.screen.ui.header.HeaderView
