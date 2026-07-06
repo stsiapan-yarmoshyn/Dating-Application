@@ -25,26 +25,24 @@ fun FooterView(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 24.dp),
-        horizontalArrangement = Arrangement.Center, // Центрируем кнопки на экране
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Кнопка Дизлайка (Крестик)
         CircleButton(
             icon = Icons.Default.Clear,
-            iconColor = Color(0xFFE91E63), // Розово-красный цвет крестика
-            borderColor = Color(0xFFE91E63).copy(alpha = 0.3f), // Полупрозрачная граница
-            size = 76.dp, // Размер как на скриншоте (большая кнопка)
+            iconColor = Color(0xFFE91E63),
+            borderColor = Color(0xFFE91E63).copy(alpha = 0.3f),
+            size = 76.dp,
             iconSize = 36.dp,
             onClick = onDiscardClick
         )
 
-        Spacer(modifier = Modifier.width(32.dp)) // Расстояние между кнопками
+        Spacer(modifier = Modifier.width(32.dp))
 
-        // Кнопка Лайка (Сердечко)
         CircleButton(
             icon = Icons.Default.Favorite,
-            iconColor = Color(0xFF00E676), // Ярко-зеленый цвет сердечка
-            borderColor = Color(0xFF00E676).copy(alpha = 0.3f), // Полупрозрачная граница
+            iconColor = Color(0xFF00E676),
+            borderColor = Color(0xFF00E676).copy(alpha = 0.3f),
             size = 76.dp,
             iconSize = 34.dp,
             onClick = onLikeClick

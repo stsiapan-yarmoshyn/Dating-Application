@@ -29,7 +29,6 @@ fun CircleButton(
         modifier = Modifier
             .size(size)
             .clip(CircleShape)
-            // Темный полупрозрачный фон круга, как в оригинале
             .background(Color(0xFF11141E).copy(alpha = 0.9f))
             .border(
                 width = 1.5.dp,

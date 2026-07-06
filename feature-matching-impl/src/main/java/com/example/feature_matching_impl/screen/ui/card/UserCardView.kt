@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.feature_matching_api.model.UserProfileModel
 import com.example.feature_matching_impl.screen.LightAndDarkPreview
+import com.example.feature_matching_impl.screen.ui.card.bottom.BottomInfoView
 
 
 val user = UserProfileModel(
