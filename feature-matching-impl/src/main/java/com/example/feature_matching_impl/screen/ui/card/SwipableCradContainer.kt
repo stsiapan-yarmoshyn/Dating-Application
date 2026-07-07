@@ -1,13 +1,10 @@
 package com.example.feature_matching_impl.screen.ui.card
 
-import androidx.compose.animation.core.exponentialDecay
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
-import androidx.compose.foundation.gestures.snapTo
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -18,10 +15,8 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -35,7 +30,6 @@ enum class SwipeDirection {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SwipeableCardContainer(
-    currentUserId: String,
     onSwipedLeft: () -> Unit,
     onSwipedRight: () -> Unit,
     onSwipeProgress: (Float) -> Unit,
@@ -57,7 +51,6 @@ fun SwipeableCardContainer(
         AnchoredDraggableState(
             initialValue = SwipeDirection.Center,
             anchors = currentAnchors,
-            //confirmValueChange = { true }
         )
     }
 

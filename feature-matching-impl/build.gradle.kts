@@ -69,4 +69,6 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.glide.compose)
     ksp(libs.glide.ksp)
+
+    implementation(libs.androidx.palette.ktx)
 }

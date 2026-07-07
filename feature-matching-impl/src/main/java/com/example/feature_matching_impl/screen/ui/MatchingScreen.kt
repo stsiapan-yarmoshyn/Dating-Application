@@ -1,6 +1,5 @@
 package com.example.feature_matching_impl.screen.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,19 +19,21 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import com.example.feature_matching_api.model.PhotoModel
 import com.example.feature_matching_api.model.UserProfileModel
 import com.example.feature_matching_impl.screen.ui.bottom_sheet.UserBottomSheet
 import com.example.feature_matching_impl.screen.ui.card.SwipeableCardContainer
-import com.example.feature_matching_impl.util.LightAndDarkPreview
 import com.example.feature_matching_impl.screen.ui.card.UserCardView
 import com.example.feature_matching_impl.screen.ui.footer.FooterView
 import com.example.feature_matching_impl.screen.ui.header.HeaderView
+import com.example.feature_matching_impl.util.LightAndDarkPreview
 import kotlinx.coroutines.launch
 
+//TODO -> delete mock data
+//mock user 1
 val user = UserProfileModel(
     name = "Sarah, 24",
     gender = "",
@@ -48,6 +49,7 @@ val user = UserProfileModel(
     searchGender = ""
 )
 
+//Mock user 2
 val user2 = UserProfileModel(
     name = "Maks, 24",
     gender = "",
@@ -63,6 +65,7 @@ val user2 = UserProfileModel(
     searchGender = ""
 )
 
+//Mock user 3
 val user3 = UserProfileModel(
     name = "Eugene, 24",
     gender = "",
@@ -92,7 +95,9 @@ fun MatchingScreen(
 
     var swipeProgress by remember { mutableFloatStateOf(0f) }
 
+
     val userList = remember {
+        //TODO -> replace with real data
         mutableStateListOf(user, user2, user3)
     }
 
@@ -144,7 +149,6 @@ fun MatchingScreen(
 
                 key(currentUser.email) {
                     SwipeableCardContainer(
-                        currentUserId = currentUser.email,
                         onSwipeProgress = { progress ->
                             swipeProgress = progress
                         },
@@ -164,7 +168,11 @@ fun MatchingScreen(
                     }
                 }
             } else {
-                Text(text = "Карточки закончились! 😔")
+                Text(
+                    text = "Карточки закончились!",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                )
             }
         }
 
