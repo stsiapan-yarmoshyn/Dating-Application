@@ -33,7 +33,7 @@ fun HeaderView(
             .fillMaxWidth()
             .height(64.dp)
             .background(Color(0xFF0F111A)) // Темный фон панели
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

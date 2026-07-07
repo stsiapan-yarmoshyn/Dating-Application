@@ -25,7 +25,7 @@ fun PhotoView(
 
     val isPreview = LocalInspectionMode.current
 
-    val imageModel = if (isPreview) {
+    val imageModel = if (isPreview || photoUrl.isEmpty()) {
         R.drawable.test1
     } else {
         photoUrl

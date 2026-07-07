@@ -16,10 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.feature_matching_api.model.UserProfileModel
 
 @Composable
 fun BottomInfoView(
     modifier: Modifier,
+    user: UserProfileModel,
     onInfoClick: () -> Unit,
 ) {
     Row(
@@ -34,8 +36,8 @@ fun BottomInfoView(
         ) {
 
             InfoTextView(
-                leadingText = "Sarah",
-                baseText = "24",
+                leadingText = user.name,
+                baseText = "",
                 baseTextSize = 28
             )
 

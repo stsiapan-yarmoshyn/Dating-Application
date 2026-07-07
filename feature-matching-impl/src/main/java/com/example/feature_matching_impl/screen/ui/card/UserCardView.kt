@@ -41,8 +41,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun UserCardView(
     user: UserProfileModel,
-    onLikeSwipe: () -> Unit,
-    onDislikeSwipe: () -> Unit,
     onInfoClick: () -> Unit,
 ) {
 
@@ -77,6 +75,7 @@ fun UserCardView(
         )
 
         BottomInfoView(
+            user = user,
             modifier = Modifier.align(Alignment.BottomEnd)
         ) {
             onInfoClick()
@@ -105,12 +104,6 @@ fun UserCardPreview() {
 
     UserCardView(
         user = user,
-        onLikeSwipe = {
-
-        },
-        onDislikeSwipe = {
-
-        },
         onInfoClick = {
 
         },
