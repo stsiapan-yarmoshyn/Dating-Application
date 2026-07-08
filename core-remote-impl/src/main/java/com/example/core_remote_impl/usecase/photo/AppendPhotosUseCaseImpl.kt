@@ -1,9 +1,9 @@
 package com.example.core_remote_impl.usecase.photo
 
-import com.example.core_backendless_api.model.RemotePhotoModel
-import com.example.core_backendless_api.model.RemoteUserProfileModel
-import com.example.core_backendless_api.repository.PhotoRepository
-import com.example.core_backendless_api.usecase.photo.AppendPhotosUseCase
+import com.example.core_remote_api.model.RemotePhotoModel
+import com.example.core_remote_api.model.RemoteUserProfileModel
+import com.example.core_remote_api.repository.PhotoRepository
+import com.example.core_remote_api.usecase.photo.AppendPhotosUseCase
 import javax.inject.Inject
 
 internal class AppendPhotosUseCaseImpl @Inject constructor(

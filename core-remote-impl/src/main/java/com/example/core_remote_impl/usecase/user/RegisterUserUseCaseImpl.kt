@@ -1,9 +1,9 @@
 package com.example.core_remote_impl.usecase.user
 
-import com.example.core_backendless_api.model.RemoteUserProfileModel
-import com.example.core_backendless_api.model.RegistrationResponseModel
-import com.example.core_backendless_api.repository.UserRepository
-import com.example.core_backendless_api.usecase.user.RegisterUserUseCase
+import com.example.core_remote_api.model.RemoteUserProfileModel
+import com.example.core_remote_api.model.RegistrationResponseModel
+import com.example.core_remote_api.repository.UserRepository
+import com.example.core_remote_api.usecase.user.RegisterUserUseCase
 import javax.inject.Inject
 
 internal class RegisterUserUseCaseImpl @Inject constructor(

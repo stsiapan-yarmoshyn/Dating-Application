@@ -1,4 +1,4 @@
-package com.example.core_backendless_api.model
+package com.example.core_remote_api.model
 
 data class RemotePhotoModel(
     val photoUrl: String,

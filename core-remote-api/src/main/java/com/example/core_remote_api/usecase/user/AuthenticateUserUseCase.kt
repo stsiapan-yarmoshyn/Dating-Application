@@ -1,6 +1,6 @@
-package com.example.core_backendless_api.usecase.user
+package com.example.core_remote_api.usecase.user
 
-import com.example.core_backendless_api.model.RemoteUserProfileModel
+import com.example.core_remote_api.model.RemoteUserProfileModel
 
 interface AuthenticateUserUseCase {
 

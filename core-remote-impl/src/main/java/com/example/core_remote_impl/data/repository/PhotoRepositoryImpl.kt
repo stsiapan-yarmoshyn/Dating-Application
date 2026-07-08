@@ -1,8 +1,8 @@
 package com.example.core_remote_impl.data.repository
 
-import com.example.core_backendless_api.model.RemotePhotoModel
-import com.example.core_backendless_api.model.RemoteUserProfileModel
-import com.example.core_backendless_api.repository.PhotoRepository
+import com.example.core_remote_api.model.RemotePhotoModel
+import com.example.core_remote_api.model.RemoteUserProfileModel
+import com.example.core_remote_api.repository.PhotoRepository
 import com.example.core_remote_impl.data.mapper.photo.toAppendRequest
 import com.example.core_remote_impl.data.mapper.user.toUserProfileModel
 import com.example.core_remote_impl.data.network.PhotoApi

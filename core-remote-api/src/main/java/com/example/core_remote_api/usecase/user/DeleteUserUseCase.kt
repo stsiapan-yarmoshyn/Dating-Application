@@ -1,4 +1,4 @@
-package com.example.core_backendless_api.usecase.user
+package com.example.core_remote_api.usecase.user
 
 interface DeleteUserUseCase {
 

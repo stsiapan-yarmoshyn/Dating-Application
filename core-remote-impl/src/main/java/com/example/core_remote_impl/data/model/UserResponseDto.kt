@@ -3,7 +3,6 @@ package com.example.core_remote_impl.data.model
 import com.google.gson.annotations.SerializedName
 
 internal data class UserResponseDto(
-    @SerializedName("password") val password: String,
     @SerializedName("email") val email: String,
     @SerializedName("gender") val gender: String,
     @SerializedName("birth_date") val birthDate: Long,

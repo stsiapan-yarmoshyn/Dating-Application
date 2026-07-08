@@ -1,7 +1,7 @@
-package com.example.core_backendless_api.repository
+package com.example.core_remote_api.repository
 
-import com.example.core_backendless_api.model.RemotePhotoModel
-import com.example.core_backendless_api.model.RemoteUserProfileModel
+import com.example.core_remote_api.model.RemotePhotoModel
+import com.example.core_remote_api.model.RemoteUserProfileModel
 
 interface PhotoRepository {
 

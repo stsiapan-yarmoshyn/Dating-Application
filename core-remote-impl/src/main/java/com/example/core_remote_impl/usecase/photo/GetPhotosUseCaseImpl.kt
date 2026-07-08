@@ -1,8 +1,8 @@
 package com.example.core_remote_impl.usecase.photo
 
-import com.example.core_backendless_api.model.RemotePhotoModel
-import com.example.core_backendless_api.repository.PhotoRepository
-import com.example.core_backendless_api.usecase.photo.GetPhotosUseCase
+import com.example.core_remote_api.model.RemotePhotoModel
+import com.example.core_remote_api.repository.PhotoRepository
+import com.example.core_remote_api.usecase.photo.GetPhotosUseCase
 import javax.inject.Inject
 
 internal class GetPhotosUseCaseImpl @Inject constructor(

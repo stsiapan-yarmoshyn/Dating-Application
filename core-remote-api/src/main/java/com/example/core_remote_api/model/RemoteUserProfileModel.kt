@@ -1,10 +1,10 @@
-package com.example.core_backendless_api.model
+package com.example.core_remote_api.model
 
 data class RemoteUserProfileModel(
     val name: String,
     val gender: String,
     val email: String,
-    val password: String,
+    val password: String = "",
     val bio: String,
     val birthDate: Long,
     val photos: List<RemotePhotoModel>,

@@ -41,31 +41,30 @@ internal object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideBackendlessAuthApi(
-        okHttpClient: OkHttpClient,
-    ): UserServiceApi {
-
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BACKENDLESS_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(UserServiceApi::class.java)
+    }
 
+    @Singleton
+    @Provides
+    fun provideBackendlessAuthApi(
+        retrofit: Retrofit
+    ): UserServiceApi {
+        return  retrofit.create(UserServiceApi::class.java)
     }
 
     @Singleton
     @Provides
     fun providePhotoApi(
-        okHttpClient: OkHttpClient,
+        retrofit: Retrofit,
     ): PhotoApi {
-        return Retrofit.Builder()
-            .baseUrl(BuildConfig.BACKENDLESS_BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(PhotoApi::class.java)
-
+        return  retrofit.create(PhotoApi::class.java)
     }
 
 }
