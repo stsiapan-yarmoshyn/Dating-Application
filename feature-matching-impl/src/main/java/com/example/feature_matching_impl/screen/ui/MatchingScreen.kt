@@ -25,11 +25,13 @@ import androidx.compose.ui.unit.sp
 import com.example.feature_matching_api.model.PhotoModel
 import com.example.feature_matching_api.model.UserProfileModel
 import com.example.feature_matching_impl.screen.ui.bottom_sheet.UserBottomSheet
+import com.example.feature_matching_impl.screen.ui.card.SwipeDirection
 import com.example.feature_matching_impl.screen.ui.card.SwipeableCardContainer
 import com.example.feature_matching_impl.screen.ui.card.UserCardView
 import com.example.feature_matching_impl.screen.ui.footer.FooterView
 import com.example.feature_matching_impl.screen.ui.header.HeaderView
 import com.example.feature_matching_impl.util.LightAndDarkPreview
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 //TODO -> delete mock data
@@ -87,6 +89,8 @@ val user3 = UserProfileModel(
 fun MatchingScreen(
     //matchingViewModel: MatchingViewModel = hiltViewModel()
 ) {
+    //TODO -> try send it to the viewModel if necessary
+
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false
@@ -94,6 +98,7 @@ fun MatchingScreen(
     val scope = rememberCoroutineScope()
 
     var swipeProgress by remember { mutableFloatStateOf(0f) }
+    val swipeActionFlow = remember { MutableSharedFlow<SwipeDirection>() }
 
 
     val userList = remember {
@@ -149,6 +154,7 @@ fun MatchingScreen(
 
                 key(currentUser.email) {
                     SwipeableCardContainer(
+                        actionFlow = swipeActionFlow,
                         onSwipeProgress = { progress ->
                             swipeProgress = progress
                         },
@@ -177,8 +183,16 @@ fun MatchingScreen(
         }
 
         FooterView(
-            onDiscardClick = {},
-            onLikeClick = {}
+            onDiscardClick = {
+                scope.launch {
+                    swipeActionFlow.emit(SwipeDirection.Left)
+                }
+            },
+            onLikeClick = {
+                scope.launch {
+                    swipeActionFlow.emit(SwipeDirection.Right)
+                }
+            }
         )
 
         if (showBottomSheet) {
