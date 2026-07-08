@@ -72,12 +72,14 @@ fun LoginScreen(
                 loginViewModel.handleEvent(LoginEvent.EmailChanged(it))
             }
 
+            Spacer(modifier = Modifier.height(16.dp))
+
             //Поле ввода пароля
             PasswordTextField(state.password, state.isLoading) {
                 loginViewModel.handleEvent(LoginEvent.PasswordChanged(it))
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             // Кнопка входа с индикатором загрузки
             LoginBtnWithCircularProgress(state.isButtonEnabled, state.isLoading) {

@@ -34,6 +34,4 @@ fun EmailTextField(
         singleLine = true,
         enabled = !isLoading
     )
-
-    Spacer(modifier = Modifier.height(16.dp))
 }

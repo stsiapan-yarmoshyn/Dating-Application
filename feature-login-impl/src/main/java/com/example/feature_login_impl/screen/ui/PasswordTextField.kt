@@ -65,6 +65,4 @@ fun PasswordTextField(
         singleLine = true,
         enabled = !isLoading
     )
-
-    Spacer(modifier = Modifier.height(16.dp))
 }
