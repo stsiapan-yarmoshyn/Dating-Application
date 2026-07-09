@@ -4,8 +4,7 @@ import com.example.feature_login_impl.util.UiTextUtil
 
 sealed interface LoginEffect {
 
-    @JvmInline
-    value class Error(val message: UiTextUtil) : LoginEffect
-    object Success : LoginEffect
+    data class Error(val message: UiTextUtil) : LoginEffect
+    data object Success : LoginEffect
 
 }

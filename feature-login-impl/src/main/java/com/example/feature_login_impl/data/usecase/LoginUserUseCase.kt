@@ -1,6 +1,7 @@
 package com.example.feature_login_impl.data.usecase
 
 import com.example.feature_login_api.model.UserProfileModel
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class LoginUserUseCase @Inject constructor(
@@ -8,7 +9,9 @@ class LoginUserUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(email: String, password: String): Result<UserProfileModel> {
-        return authUserUseCase(email, password).toFeatureModel()
+        withContext(Dispatchers.IO) {
+            return authUserUseCase(email, password).toFeatureModel()
+        }
     }
 
 }

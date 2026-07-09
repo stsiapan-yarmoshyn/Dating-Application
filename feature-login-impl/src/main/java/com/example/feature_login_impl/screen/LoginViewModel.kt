@@ -51,8 +51,7 @@ class LoginViewModel @Inject constructor(
 
     private fun logIn() {
         _state.update { it.copy(isLoading = true) }
-        viewModelScope.launch(Dispatchers.IO) {
-
+        viewModelScope.launch {
             loginUseCase(_state.value.email, _state.value.password).fold(
                 onSuccess = { user ->
                     saveUserUseCase(user).fold(
