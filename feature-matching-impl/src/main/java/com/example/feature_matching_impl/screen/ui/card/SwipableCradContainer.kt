@@ -19,74 +19,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.IntOffset
+import com.example.feature_matching_impl.screen.SwipeDirection
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-enum class SwipeDirection {
-    Left,
-    Center,
-    Right
-}
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SwipeableCardContainer(
-    actionFlow: SharedFlow<SwipeDirection>,
-    onSwipedLeft: () -> Unit,
-    onSwipedRight: () -> Unit,
-    onSwipeProgress: (Float) -> Unit,
+    swipeState: AnchoredDraggableState<SwipeDirection>,
+    containerWidthPx: Float,
     content: @Composable () -> Unit
 ) {
-    val windowInfo = LocalWindowInfo.current
-    val containerWidthPx = windowInfo.containerSize.width.toFloat()
-    val dismissThreshold = containerWidthPx * 1.2f
-
-    val currentAnchors = remember(dismissThreshold) {
-        DraggableAnchors {
-            SwipeDirection.Left at -dismissThreshold
-            SwipeDirection.Center at 0f
-            SwipeDirection.Right at dismissThreshold
-        }
-    }
-
-    val swipeState = remember(currentAnchors) {
-        AnchoredDraggableState(
-            initialValue = SwipeDirection.Center,
-            anchors = currentAnchors,
-        )
-    }
-
-    LaunchedEffect(actionFlow) {
-        actionFlow.collect { direction ->
-            when (direction) {
-                SwipeDirection.Left -> swipeState.animateTo(SwipeDirection.Left, tween(350))
-                SwipeDirection.Right -> swipeState.animateTo(SwipeDirection.Right, tween(350))
-                else -> {}
-            }
-        }
-    }
-
-    LaunchedEffect(swipeState, containerWidthPx) {
-        snapshotFlow { swipeState.offset }
-            .distinctUntilChanged()
-            .collect { currentOffset ->
-                if (containerWidthPx > 0 && !currentOffset.isNaN()) {
-                    val progress = abs(currentOffset) / containerWidthPx
-                    onSwipeProgress(progress.coerceIn(0f, 1f))
-                }
-            }
-    }
-
-    LaunchedEffect(swipeState.currentValue) {
-        when (swipeState.currentValue) {
-            SwipeDirection.Left -> onSwipedLeft()
-            SwipeDirection.Right -> onSwipedRight()
-            SwipeDirection.Center -> {}
-        }
-    }
-
     Box(
         modifier = Modifier
             .fillMaxSize()

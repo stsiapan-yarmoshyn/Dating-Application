@@ -1,5 +1,8 @@
 package com.example.feature_matching_impl.screen.ui
 
+import androidx.compose.foundation.gestures.AnchoredDraggableState
+import androidx.compose.foundation.gestures.DraggableAnchors
+import androidx.compose.foundation.gestures.animateTo
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,102 +12,43 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.feature_matching_api.model.PhotoModel
 import com.example.feature_matching_api.model.UserProfileModel
+import com.example.feature_matching_impl.screen.MatchingEvent
+import com.example.feature_matching_impl.screen.MatchingViewModel
+import com.example.feature_matching_impl.screen.SwipeDirection
 import com.example.feature_matching_impl.screen.ui.bottom_sheet.UserBottomSheet
-import com.example.feature_matching_impl.screen.ui.card.SwipeDirection
 import com.example.feature_matching_impl.screen.ui.card.SwipeableCardContainer
 import com.example.feature_matching_impl.screen.ui.card.UserCardView
 import com.example.feature_matching_impl.screen.ui.footer.FooterView
 import com.example.feature_matching_impl.screen.ui.header.HeaderView
 import com.example.feature_matching_impl.util.LightAndDarkPreview
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-
-//TODO -> delete mock data
-//mock user 1
-val user = UserProfileModel(
-    name = "Sarah, 24",
-    gender = "",
-    email = "sara@fff",
-    password = "",
-    bio = "UI/UX Designer who runs on iced matchas and design deadlines. When I am not pushing pixels, I am exploring hiking trails or cataloging thrift stores.",
-    birthDate = 0,
-    photos = listOf(
-        PhotoModel("", 0),
-        PhotoModel("", 1),
-        PhotoModel("", 2)
-    ),
-    searchGender = ""
-)
-
-//Mock user 2
-val user2 = UserProfileModel(
-    name = "Maks, 24",
-    gender = "",
-    email = "Maks@ggg",
-    password = "",
-    bio = "When I am not pushing pixels, I am exploring hiking trails or cataloging thrift stores.",
-    birthDate = 0,
-    photos = listOf(
-        PhotoModel("", 0),
-        PhotoModel("", 1),
-        PhotoModel("", 2)
-    ),
-    searchGender = ""
-)
-
-//Mock user 3
-val user3 = UserProfileModel(
-    name = "Eugene, 24",
-    gender = "",
-    email = "Eugene@jjj",
-    password = "",
-    bio = "Test test test tes.",
-    birthDate = 0,
-    photos = listOf(
-        PhotoModel("", 0),
-        PhotoModel("", 1),
-        PhotoModel("", 2)
-    ),
-    searchGender = ""
-)
-
+import kotlin.math.abs
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MatchingScreen(
-    //matchingViewModel: MatchingViewModel = hiltViewModel()
+    matchingViewModel: MatchingViewModel = hiltViewModel()
 ) {
-    //TODO -> try send it to the viewModel if necessary
-
-    var showBottomSheet by remember { mutableStateOf(false) }
+    val state by matchingViewModel.state.collectAsStateWithLifecycle()
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false
     )
-    val scope = rememberCoroutineScope()
-
-    var swipeProgress by remember { mutableFloatStateOf(0f) }
-    val swipeActionFlow = remember { MutableSharedFlow<SwipeDirection>() }
-
-
-    val userList = remember {
-        //TODO -> replace with real data
-        mutableStateListOf(user, user2, user3)
-    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -123,18 +67,60 @@ fun MatchingScreen(
                 .weight(1f),
             contentAlignment = Alignment.Center
         ) {
-            if (userList.isNotEmpty()) {
+            if (state.users.isNotEmpty()) {
+                val containerWidthPx = LocalWindowInfo.current.containerSize.width.toFloat()
+                val dismissThreshold = containerWidthPx * 1.2f
 
-                if (userList.size > 1) {
-                    val nextUser = userList[1]
+                val currentAnchors = remember(dismissThreshold) {
+                    DraggableAnchors {
+                        SwipeDirection.Left at -dismissThreshold
+                        SwipeDirection.Center at 0f
+                        SwipeDirection.Right at dismissThreshold
+                    }
+                }
 
-                    val targetScale = 0.9f + (swipeProgress * 0.1f)
-                    val targetAlpha = 0.5f + (swipeProgress * 0.5f)
+                //remember
+                val currentUser = state.users.first()
 
+                val swipeState = remember(currentUser.email, currentAnchors) {
+                    AnchoredDraggableState(
+                        initialValue = SwipeDirection.Center,
+                        anchors = currentAnchors,
+                    )
+                }
+
+                LaunchedEffect(Unit) {
+                    matchingViewModel.effect.collect { direction ->
+                        when (direction) {
+                            SwipeDirection.Left -> swipeState.animateTo(SwipeDirection.Left)
+                            SwipeDirection.Right -> swipeState.animateTo(SwipeDirection.Right)
+                            //Попробовать избавиться
+                            SwipeDirection.Center -> swipeState.animateTo(SwipeDirection.Center)
+                        }
+                    }
+                }
+
+                LaunchedEffect(swipeState.currentValue) {
+                    if (swipeState.currentValue == SwipeDirection.Right) {
+                        matchingViewModel.handleEvent(MatchingEvent.HandleUser(currentUser, true))
+                    } else if (swipeState.currentValue == SwipeDirection.Left) {
+                        matchingViewModel.handleEvent(MatchingEvent.HandleUser(currentUser, false))
+                    }
+                }
+
+                if (state.users.size > 1) {
+                    val nextUser = state.users[1]
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .graphicsLayer {
+                                val offset =
+                                    if (swipeState.offset.isNaN()) 0f else swipeState.offset
+                                val progress = (abs(offset) / containerWidthPx).coerceIn(0f, 1f)
+
+                                val targetScale = 0.9f + (progress * 0.1f)
+                                val targetAlpha = 0.5f + (progress * 0.5f)
+
                                 scaleX = targetScale
                                 scaleY = targetScale
                                 alpha = targetAlpha
@@ -144,34 +130,34 @@ fun MatchingScreen(
                         UserCardView(
                             user = nextUser,
                             onInfoClick = {
-                                showBottomSheet = true
+                                matchingViewModel.handleEvent(MatchingEvent.OnInfoClick(true))
                             },
                         )
                     }
                 }
 
-                val currentUser = userList.first()
-
                 key(currentUser.email) {
                     SwipeableCardContainer(
-                        actionFlow = swipeActionFlow,
-                        onSwipeProgress = { progress ->
-                            swipeProgress = progress
-                        },
-                        onSwipedLeft = {
-                            userList.remove(currentUser)
-                        },
-                        onSwipedRight = {
-                            userList.remove(currentUser)
-                        }
+                        swipeState = swipeState,
+                        containerWidthPx = containerWidthPx
                     ) {
                         UserCardView(
                             user = currentUser,
                             onInfoClick = {
-                                showBottomSheet = true
+                                matchingViewModel.handleEvent(MatchingEvent.OnInfoClick(true))
                             },
                         )
                     }
+                }
+
+                if (state.showBottomSheet) {
+                    UserBottomSheet(
+                        user = currentUser,
+                        bottomSheetState = sheetState,
+                        onDismiss = {
+                            matchingViewModel.handleEvent(MatchingEvent.OnInfoClick(false))
+                        }
+                    )
                 }
             } else {
                 Text(
@@ -184,30 +170,12 @@ fun MatchingScreen(
 
         FooterView(
             onDiscardClick = {
-                scope.launch {
-                    swipeActionFlow.emit(SwipeDirection.Left)
-                }
+                matchingViewModel.handleEvent(MatchingEvent.OnSwipeLeft)
             },
             onLikeClick = {
-                scope.launch {
-                    swipeActionFlow.emit(SwipeDirection.Right)
-                }
+                matchingViewModel.handleEvent(MatchingEvent.OnSwipeRight)
             }
         )
-
-        if (showBottomSheet) {
-            UserBottomSheet(
-                user = user,
-                bottomSheetState = sheetState,
-                onDismiss = {
-                    scope.launch { sheetState.hide() }.invokeOnCompletion {
-                        if (!sheetState.isVisible) {
-                            showBottomSheet = false
-                        }
-                    }
-                }
-            )
-        }
     }
 }
 
