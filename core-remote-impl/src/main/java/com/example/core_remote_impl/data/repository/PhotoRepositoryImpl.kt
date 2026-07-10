@@ -2,7 +2,7 @@ package com.example.core_remote_impl.data.repository
 
 import com.example.core_remote_api.model.RemotePhotoModel
 import com.example.core_remote_api.model.RemoteUserProfileModel
-import com.example.core_remote_api.repository.PhotoRepository
+import com.example.core_remote_api.repository.RemotePhotoRepository
 import com.example.core_remote_impl.data.mapper.photo.toAppendRequest
 import com.example.core_remote_impl.data.mapper.user.toUserProfileModel
 import com.example.core_remote_impl.data.network.PhotoApi
@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 internal class PhotoRepositoryImpl @Inject constructor(
     private val photoApi: PhotoApi
-) : PhotoRepository {
+) : RemotePhotoRepository {
 
     override suspend fun appendPhotosForUser(
         photos: List<RemotePhotoModel>,

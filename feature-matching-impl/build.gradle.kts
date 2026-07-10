@@ -38,8 +38,8 @@ android {
 
 dependencies {
     implementation(project(":feature-matching-api"))
-    implementation(project(":feature-chat-api"))
     implementation(project(":core-database-api"))
+    implementation(project(":core-remote-api"))
     implementation(project(":core-notification-api"))
 
     implementation(libs.androidx.core.ktx)
