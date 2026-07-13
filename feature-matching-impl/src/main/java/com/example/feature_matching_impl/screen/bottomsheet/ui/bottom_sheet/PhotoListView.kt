@@ -1,4 +1,4 @@
-package com.example.feature_matching_impl.screen.ui.bottom_sheet
+package com.example.feature_matching_impl.screen.bottomsheet.ui.bottom_sheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.feature_matching_api.model.PhotoModel
-import com.example.feature_matching_impl.screen.ui.card.photo.PhotoView
+import com.example.feature_matching_impl.screen.mactching.ui.card.photo.PhotoView
 
 @Composable
 fun PhotoListView(

@@ -1,4 +1,4 @@
-package com.example.feature_matching_impl.screen.ui.card.bottom
+package com.example.feature_matching_impl.screen.mactching.ui.card.bottom
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

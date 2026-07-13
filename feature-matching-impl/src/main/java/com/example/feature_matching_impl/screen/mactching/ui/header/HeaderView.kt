@@ -1,4 +1,4 @@
-package com.example.feature_matching_impl.screen.ui.header
+package com.example.feature_matching_impl.screen.mactching.ui.header
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

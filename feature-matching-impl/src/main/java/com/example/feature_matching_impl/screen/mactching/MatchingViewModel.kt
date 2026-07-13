@@ -1,10 +1,11 @@
-package com.example.feature_matching_impl.screen
+package com.example.feature_matching_impl.screen.mactching
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core_remote_api.usecase.user.GetMatchingUsersUseCase
 import com.example.feature_matching_api.model.PhotoModel
 import com.example.feature_matching_api.model.UserProfileModel
+import com.example.feature_matching_impl.screen.SwipeDirection
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -77,7 +78,6 @@ class MatchingViewModel @Inject constructor(
 
     private val _effect = MutableSharedFlow<SwipeDirection>()
     val effect: SharedFlow<SwipeDirection> = _effect
-    private var currentPage = 0
 
     fun handleEvent(event: MatchingEvent) {
         when (event) {
@@ -88,10 +88,6 @@ class MatchingViewModel @Inject constructor(
             }
             is MatchingEvent.OnSwipeRight -> {
                 onRightSwipe()
-            }
-
-            is MatchingEvent.OnInfoClick -> {
-                showBottomSheet(event.showBottomSheet)
             }
 
             is MatchingEvent.HandleUser -> {
@@ -162,11 +158,6 @@ class MatchingViewModel @Inject constructor(
             currentState.copy(users = updatedUsers)
         }
     }
-
-    private fun showBottomSheet(showBottomSheet: Boolean) {
-        _state.update { it.copy(showBottomSheet = showBottomSheet) }
-    }
-
     companion object {
         const val DEFAULT_PAGE_SIZE = 10
         const val START_OFFSET = 0

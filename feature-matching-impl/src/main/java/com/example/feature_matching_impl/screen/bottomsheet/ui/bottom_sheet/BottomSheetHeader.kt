@@ -1,4 +1,4 @@
-package com.example.feature_matching_impl.screen.ui.bottom_sheet
+package com.example.feature_matching_impl.screen.bottomsheet.ui.bottom_sheet
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

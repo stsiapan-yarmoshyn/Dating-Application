@@ -1,4 +1,4 @@
-package com.example.feature_matching_impl.screen.ui.footer
+package com.example.feature_matching_impl.screen.mactching.ui.footer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

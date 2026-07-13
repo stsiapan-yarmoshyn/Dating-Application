@@ -1,4 +1,4 @@
-package com.example.feature_matching_impl.screen.ui.card
+package com.example.feature_matching_impl.screen.mactching.ui.card
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi

@@ -1,4 +1,4 @@
-package com.example.feature_matching_impl.screen.ui.card
+package com.example.feature_matching_impl.screen.mactching.ui.card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,9 +17,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.example.feature_matching_api.model.UserProfileModel
-import com.example.feature_matching_impl.screen.ui.card.bottom.BottomInfoView
-import com.example.feature_matching_impl.screen.ui.card.photo.PhotoListView
-import com.example.feature_matching_impl.screen.ui.card.top.TopCardIndicator
+import com.example.feature_matching_impl.screen.mactching.ui.card.bottom.BottomInfoView
+import com.example.feature_matching_impl.screen.mactching.ui.card.photo.PhotoListView
+import com.example.feature_matching_impl.screen.mactching.ui.card.top.TopCardIndicator
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable

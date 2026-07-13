@@ -1,4 +1,4 @@
-package com.example.feature_matching_impl.screen.ui
+package com.example.feature_matching_impl.screen.mactching.ui
 
 import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
@@ -15,9 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -26,18 +26,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.feature_matching_api.model.PhotoModel
-import com.example.feature_matching_api.model.UserProfileModel
-import com.example.feature_matching_impl.screen.MatchingEvent
-import com.example.feature_matching_impl.screen.MatchingViewModel
+import com.example.feature_matching_impl.screen.mactching.MatchingEvent
+import com.example.feature_matching_impl.screen.mactching.MatchingViewModel
 import com.example.feature_matching_impl.screen.SwipeDirection
-import com.example.feature_matching_impl.screen.ui.bottom_sheet.UserBottomSheet
-import com.example.feature_matching_impl.screen.ui.card.SwipeableCardContainer
-import com.example.feature_matching_impl.screen.ui.card.UserCardView
-import com.example.feature_matching_impl.screen.ui.footer.FooterView
-import com.example.feature_matching_impl.screen.ui.header.HeaderView
+import com.example.feature_matching_impl.screen.bottomsheet.ui.bottom_sheet.UserBottomSheet
+import com.example.feature_matching_impl.screen.mactching.ui.card.SwipeableCardContainer
+import com.example.feature_matching_impl.screen.mactching.ui.card.UserCardView
+import com.example.feature_matching_impl.screen.mactching.ui.footer.FooterView
+import com.example.feature_matching_impl.screen.mactching.ui.header.HeaderView
 import com.example.feature_matching_impl.util.LightAndDarkPreview
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.filter
 import kotlin.math.abs
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,9 +44,7 @@ fun MatchingScreen(
     matchingViewModel: MatchingViewModel = hiltViewModel()
 ) {
     val state by matchingViewModel.state.collectAsStateWithLifecycle()
-    val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = false
-    )
+    val containerWidthPx = LocalWindowInfo.current.containerSize.width.toFloat()
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -68,7 +64,6 @@ fun MatchingScreen(
             contentAlignment = Alignment.Center
         ) {
             if (state.users.isNotEmpty()) {
-                val containerWidthPx = LocalWindowInfo.current.containerSize.width.toFloat()
                 val dismissThreshold = containerWidthPx * 1.2f
 
                 val currentAnchors = remember(dismissThreshold) {
@@ -79,7 +74,6 @@ fun MatchingScreen(
                     }
                 }
 
-                //remember
                 val currentUser = state.users.first()
 
                 val swipeState = remember(currentUser.email, currentAnchors) {
@@ -90,17 +84,15 @@ fun MatchingScreen(
                 }
 
                 LaunchedEffect(Unit) {
-                    matchingViewModel.effect.collect { direction ->
-                        when (direction) {
-                            SwipeDirection.Left -> swipeState.animateTo(SwipeDirection.Left)
-                            SwipeDirection.Right -> swipeState.animateTo(SwipeDirection.Right)
-                            //Попробовать избавиться
-                            SwipeDirection.Center -> swipeState.animateTo(SwipeDirection.Center)
-                        }
+                    matchingViewModel.effect
+                        .filter { it != SwipeDirection.Center }
+                        .collect { direction ->
+                            swipeState.animateTo(direction)
                     }
                 }
 
                 LaunchedEffect(swipeState.currentValue) {
+                    //убрать проверку, заливать во вью сразу свайп дирекшн и проверять в вьюмодел уже
                     if (swipeState.currentValue == SwipeDirection.Right) {
                         matchingViewModel.handleEvent(MatchingEvent.HandleUser(currentUser, true))
                     } else if (swipeState.currentValue == SwipeDirection.Left) {
@@ -130,7 +122,7 @@ fun MatchingScreen(
                         UserCardView(
                             user = nextUser,
                             onInfoClick = {
-                                matchingViewModel.handleEvent(MatchingEvent.OnInfoClick(true))
+                                //TODO -> navigate to bottom sheet (send userID)
                             },
                         )
                     }
@@ -144,20 +136,10 @@ fun MatchingScreen(
                         UserCardView(
                             user = currentUser,
                             onInfoClick = {
-                                matchingViewModel.handleEvent(MatchingEvent.OnInfoClick(true))
+                                //TODO -> navigate to bottom sheet (send userID)
                             },
                         )
                     }
-                }
-
-                if (state.showBottomSheet) {
-                    UserBottomSheet(
-                        user = currentUser,
-                        bottomSheetState = sheetState,
-                        onDismiss = {
-                            matchingViewModel.handleEvent(MatchingEvent.OnInfoClick(false))
-                        }
-                    )
                 }
             } else {
                 Text(
