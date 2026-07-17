@@ -1,22 +1,59 @@
+import org.gradle.kotlin.dsl.implementation
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.jetbrains.compose)
+    kotlin("multiplatform")
 }
+
+kotlin {
+    androidTarget() {
+        compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
+    }
+    jvm("desktop") {
+        compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
+    }
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(project(":feature-registration-api"))
+                implementation(project(":core-remote-api"))
+                implementation(project(":core-database-api"))
+                implementation(project(":core-navigation-api"))
+
+                // Compose Multiplatform UI компоненты
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                // Официальная Jetpack ViewModel KMP
+                implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.hilt.android)
+                implementation(libs.material)
+                implementation(libs.androidx.hilt.navigation.compose)
+//                implementation(project(":core-navigation"))
+            }
+        }
+    }
+}
+
 
 android {
     namespace = "com.example.feature_registration_impl"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.feature_registration_impl"
         minSdk = 24
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,29 +74,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature-registration-api"))
-    implementation(project(":core-database-api"))
-    //implementation(project(":core-remote-api"))
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-    implementation(libs.material)
-
-    //Hilt
-    implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
 }

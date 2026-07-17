@@ -20,7 +20,6 @@ import javax.inject.Singleton
 object UserUseCaseModule {
 
 
-    @Singleton
     @Provides
     fun provideAuthenticateUserUseCase(
         userRepository: UserRepository
@@ -28,7 +27,6 @@ object UserUseCaseModule {
         return AuthenticateUserUseCaseImpl(userRepository)
     }
 
-    @Singleton
     @Provides
     fun provideRegisterUserUseCase(
         userRepository: UserRepository
@@ -36,7 +34,6 @@ object UserUseCaseModule {
         return RegisterUserUseCaseImpl(userRepository)
     }
 
-    @Singleton
     @Provides
     fun provideDeleteUserUseCase(
         userRepository: UserRepository
@@ -44,7 +41,6 @@ object UserUseCaseModule {
         return DeleteUserUseCaseImpl(userRepository)
     }
 
-    @Singleton
     @Provides
     fun provideGetMatchingUsersUseCase(
         userRepository: UserRepository

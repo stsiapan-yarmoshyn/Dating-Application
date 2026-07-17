@@ -7,4 +7,5 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.dagger.hilt) apply false
     alias(libs.plugins.jetbrains.compose) apply false
+    alias(libs.plugins.kotlin.android) apply false
 }

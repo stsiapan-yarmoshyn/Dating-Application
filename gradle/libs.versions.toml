@@ -73,4 +73,5 @@ dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt
 
 #KMP
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version = "2.2.0" }
 
