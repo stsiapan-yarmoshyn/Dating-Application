@@ -2,8 +2,6 @@ package com.example.feature_registration_impl.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core_navigation_api.NavigationDispatcher
-import com.example.feature_registration_api.navigation.NavigateToLoginScreen
 import com.example.feature_registration_api.usecase.FeatureRegistrationUseCase
 import com.example.feature_registration_impl.data.mapper.toFeatureModel
 import com.example.feature_registration_impl.util.UiTextUtil
@@ -26,8 +24,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 
 open class RegistrationViewModel(
-    private val registerUserUseCase: FeatureRegistrationUseCase,
-    private val navigationDispatcher: NavigationDispatcher
+    private val registerUserUseCase: FeatureRegistrationUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(RegistrationState())
@@ -163,7 +160,7 @@ open class RegistrationViewModel(
             val result = registerUserUseCase(state.toFeatureModel())
             result.onSuccess {
                 _effect.send(RegistrationEffect.Success)
-                navigationDispatcher.emit(NavigateToLoginScreen(it.userId))
+                //navigationDispatcher.emit(NavigateToLoginScreen(it.userId))
             }.onFailure { error ->
                 _effect.send(
                     RegistrationEffect.NetworkError(

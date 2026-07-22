@@ -1,0 +1,15 @@
+<resources>
+    <!-- Базовая тема приложения, адаптированная под Material 3 и Compose -->
+    <style name="Theme.DatingApplication" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Основные цвета для системных элементов (опционально) -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Вторичный цвет бренда -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Цвет статус-бара (делаем прозрачным или привязываем к первичному цвету) -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+    </style>
+</resources>

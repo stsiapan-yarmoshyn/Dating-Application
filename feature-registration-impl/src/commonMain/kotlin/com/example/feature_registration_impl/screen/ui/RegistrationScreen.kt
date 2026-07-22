@@ -31,16 +31,17 @@ import com.example.feature_registration_impl.screen.RegistrationEffect
 import com.example.feature_registration_impl.screen.RegistrationUiEvent
 import com.example.feature_registration_impl.screen.RegistrationViewModel
 import com.example.feature_registration_impl.screen.holder.rememberRegistrationState
-import com.example.feature_registration_impl.screen.rememberRegistrationViewModel
 import datingapplication.feature_registration_impl.generated.resources.Res
 import datingapplication.feature_registration_impl.generated.resources.already_have_account_text
 import datingapplication.feature_registration_impl.generated.resources.register_header_text
 import datingapplication.feature_registration_impl.generated.resources.register_text
 import org.jetbrains.compose.resources.stringResource
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrationScreen(
-    registrationViewModel: RegistrationViewModel = rememberRegistrationViewModel(),
+    registrationViewModel: RegistrationViewModel,
+    onNavigateToDetails: (String) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val state by registrationViewModel.state.collectAsState()
@@ -59,7 +60,7 @@ fun RegistrationScreen(
 
                 is RegistrationEffect.Success -> {
                     snackbarHostState.showSnackbar("Success")
-
+                    onNavigateToDetails("")
                 }
             }
         }

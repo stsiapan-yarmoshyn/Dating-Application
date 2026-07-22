@@ -2,9 +2,9 @@ package com.example.feature_registration_impl.screen.holder
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
 import com.example.feature_registration_impl.screen.RegistrationUiEvent
-import androidx.compose.runtime.saveable.Saver
 
 
 class RegistrationScreenState(
