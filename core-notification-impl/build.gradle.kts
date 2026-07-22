@@ -3,7 +3,13 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
-android {
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) // или JVM_17, если используете Java 17
+    }
+}
+
+configure<com.android.build.api.dsl.LibraryExtension> {
     namespace = "com.example.core_notification_impl"
     compileSdk {
         version = release(36)
@@ -13,7 +19,6 @@ android {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -28,9 +33,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
 }
 

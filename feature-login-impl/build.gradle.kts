@@ -3,7 +3,13 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
-android {
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) // или JVM_17, если используете Java 17
+    }
+}
+
+configure<com.android.build.api.dsl.LibraryExtension> {
     namespace = "com.example.feature_login_impl"
     compileSdk = 36
 
@@ -25,9 +31,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
 }
 

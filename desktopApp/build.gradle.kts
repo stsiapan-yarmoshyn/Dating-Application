@@ -5,9 +5,7 @@ plugins {
 }
 
 dependencies {
-    // Подключаем ваши обновленные модули
-    implementation(project(":core-remote-api"))
-    implementation(project(":core-remote-impl"))
+    implementation(project(":shared"))
 
     // Подключаем Ktor-движок для Desktop
     implementation(libs.ktor.client.cio)
@@ -21,10 +19,10 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "MainKt" // Имя файла с функцией main
+        mainClass = "com.example.desktop.MainKt" // Имя файла с функцией main
         nativeDistributions {
             targetFormats(org.jetbrains.compose.desktop.application.dsl.TargetFormat.Msi)
-            packageName = "MyDesktopApp"
+            packageName = "DesktopApp"
         }
     }
 }

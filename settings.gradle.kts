@@ -23,6 +23,7 @@ rootProject.name = "DatingApplication"
 
 include(":app")
 include(":desktopApp")
+include(":shared")
 
 include(":feature-registration-impl")
 include(":feature-registration-api")
@@ -38,4 +39,3 @@ include(":core-notification-api")
 include(":core-notification-impl")
 include(":core-database-impl")
 include(":core-database-api")
-include(":core-navigation-api")

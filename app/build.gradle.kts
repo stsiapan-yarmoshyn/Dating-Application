@@ -2,8 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.dagger.hilt)
 }
 
 android {
@@ -38,37 +36,25 @@ android {
     buildFeatures {
         compose = true
     }
-    kotlinOptions {
-        jvmTarget = "11"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) // или JVM_17, если используете Java 17
     }
 }
 
-subprojects {
-    configurations.configureEach {
-        resolutionStrategy {
-            force("androidx.activity:activity:1.9.0")
-            force("androidx.activity:activity-ktx:1.9.0")
-        }
-    }
-}
+//subprojects {
+//    configurations.configureEach {
+//        resolutionStrategy {
+//            force("androidx.activity:activity:1.9.0")
+//            force("androidx.activity:activity-ktx:1.9.0")
+//        }
+//    }
+//}
 
 dependencies {
-    implementation(project(":feature-registration-api"))
-    implementation(project(":feature-login-api"))
-    implementation(project(":feature-matching-api"))
-    implementation(project(":feature-chat-api"))
-    implementation(project(":core-remote-api"))
-    implementation(project(":core-database-api"))
-    implementation(project(":core-notification-api"))
-
-    implementation(project(":core-navigation-api"))
-
-    implementation(project(":feature-registration-impl"))
-    implementation(project(":core-remote-impl"))
-    implementation(project(":core-database-impl"))
-//    implementation(project(":feature-login-impl"))
-//    implementation(project(":feature-matching-impl"))
-//    implementation(project(":feature-chat-impl"))
+    implementation(project(":shared"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -86,8 +72,9 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation("androidx.navigation:navigation-compose:2.8.0")
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+
 }

@@ -1,11 +1,8 @@
-import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.jetbrains.compose)
     kotlin("multiplatform")
 }
@@ -24,7 +21,6 @@ kotlin {
                 implementation(project(":feature-registration-api"))
                 implementation(project(":core-remote-api"))
                 implementation(project(":core-database-api"))
-                implementation(project(":core-navigation-api"))
 
                 // Compose Multiplatform UI компоненты
                 implementation(compose.runtime)
@@ -33,15 +29,17 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 // Официальная Jetpack ViewModel KMP
-                implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
+                implementation(libs.androidx.lifecycle.viewmodel.compose)
+                implementation(libs.koin.compose)
+                implementation(libs.koin.core)
+                implementation(libs.koin.core.viewmodel)
+                implementation(libs.koin.compose.viewmodel)
+                implementation(libs.navigation3.ui)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(libs.hilt.android)
                 implementation(libs.material)
-                implementation(libs.androidx.hilt.navigation.compose)
-//                implementation(project(":core-navigation"))
             }
         }
     }
@@ -71,9 +69,4 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-}
-
-dependencies {
-
-    ksp(libs.hilt.android.compiler)
 }

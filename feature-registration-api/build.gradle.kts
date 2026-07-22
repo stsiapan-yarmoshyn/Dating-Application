@@ -1,6 +1,8 @@
 plugins {
     id("java-library")
     alias(libs.plugins.jetbrains.kotlin.jvm)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
+
 }
 java {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -12,5 +14,6 @@ kotlin {
     }
 }
 dependencies {
-    api(project(":core-navigation-api"))
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.navigation3.ui)
 }
