@@ -9,7 +9,13 @@ sealed interface RegistrationUiEvent {
     data class SearchGenderChanged(val gender: String) : RegistrationUiEvent
     data class BirthDateChanged(val millis: Long?) : RegistrationUiEvent
     data class PhotoUrlChanged(val index: Int, val url: String) : RegistrationUiEvent
-    object AddPhotoField : RegistrationUiEvent
+    data object AddPhotoField : RegistrationUiEvent
     data class RemovePhotoField(val index: Int) : RegistrationUiEvent
-    object Submit : RegistrationUiEvent //TODO
+
+    //Focus changed
+    data class EmailFocusChanged(val hasFocus: Boolean) : RegistrationUiEvent
+    data class PasswordFocusChanged(val hasFocus: Boolean) : RegistrationUiEvent
+    data class NameFocusChanged(val hasFocus: Boolean) : RegistrationUiEvent
+
+    data object Submit : RegistrationUiEvent
 }
