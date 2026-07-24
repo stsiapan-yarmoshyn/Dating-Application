@@ -11,11 +11,11 @@ internal data class UserResponseDto(
     @SerialName("bio") val bio: String,
     @SerialName("search_gender") val searchGender: String,
     @SerialName("name") val name: String,
-    @SerialName("photos") val photos: List<PhotoDto>,
+    @SerialName("photos") val photos: List<PhotoDto> = emptyList(),
     @SerialName("objectId") val userId: String,
-    @SerialName("lastLogin") val lastLogin: Long,
-    @SerialName("userStatus") val userStatus: String,
+    @SerialName("lastLogin") val lastLogin: Long? = null,
+    @SerialName("userStatus") val userStatus: String? = null,
     @SerialName("created") val created: Long,
-    @SerialName("oAuthIdentities") val oAuthIdentities: Any? = null, //TODO implement in future
-    @SerialName("location") val location: Any? = null, //TODO implement in future
+    //@SerialName("oAuthIdentities") val oAuthIdentities: Any? = null, //TODO implement in future
+    //@SerialName("location") val location: Any? = null, //TODO implement in future
 )
