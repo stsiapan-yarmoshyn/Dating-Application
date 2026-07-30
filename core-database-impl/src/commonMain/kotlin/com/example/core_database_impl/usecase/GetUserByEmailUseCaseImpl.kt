@@ -1,14 +1,14 @@
 package com.example.core_database_impl.usecase
 
-import com.example.core_database_api.data.model.UserProfileModel
-import com.example.core_database_api.data.repository.UserRepository
-import com.example.core_database_api.data.usecase.GetUserByEmailUseCase
+import com.example.core_database_api.data.model.LocalUserProfileModel
+import com.example.core_database_api.data.repository.LocalUserRepository
+import com.example.core_database_api.data.usecase.user.GetUserByEmailUseCase
 
 internal class GetUserByEmailUseCaseImpl(
-    private val repository: UserRepository
+    private val repository: LocalUserRepository
 ): GetUserByEmailUseCase {
 
-    override suspend operator fun invoke(email: String): UserProfileModel {
+    override suspend operator fun invoke(email: String): LocalUserProfileModel {
         return repository.getUserByEmail(email)
     }
 

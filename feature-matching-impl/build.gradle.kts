@@ -36,6 +36,9 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.ui)
                 implementation(compose.components.resources)
+                //implementation(libs.compose.material.symbols)
+                implementation("androidx.compose.material:material-icons-core:1.7.3")
+                implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.7.3")
                 // Официальная Jetpack ViewModel KMP
                 implementation(libs.androidx.lifecycle.viewmodel.compose)
                 implementation(libs.koin.compose)
@@ -47,6 +50,14 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                implementation(libs.material)
+            }
+        }
+
+        // Локальные Unit-тесты для Android (бывший testImplementation)
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(libs.junit)
             }
         }
     }
@@ -75,4 +86,13 @@ configure<com.android.build.api.dsl.LibraryExtension> {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
+
+dependencies {
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

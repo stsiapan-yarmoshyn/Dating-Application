@@ -1,0 +1,15 @@
+<resources>
+    <!-- Используем встроенную тему Android без внешних библиотек -->
+    <style name="Theme.DatingApplication" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Основные цвета для системных элементов -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Вторичный цвет бренда -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Цвет статус-бара -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+    </style>
+</resources>

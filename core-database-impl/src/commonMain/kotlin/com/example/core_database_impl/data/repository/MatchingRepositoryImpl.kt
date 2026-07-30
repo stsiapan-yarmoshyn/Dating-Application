@@ -5,9 +5,8 @@ import com.example.core_database_api.data.repository.LocalMatchingRepository
 import com.example.core_database_impl.data.dao.MatchingDao
 import com.example.core_database_impl.data.mapper.toDomainList
 import com.example.core_database_impl.data.mapper.toEntityListWithPhotos
-import javax.inject.Inject
 
-internal class MatchingRepositoryImpl @Inject constructor(
+internal class MatchingRepositoryImpl(
     private val matchingDao: MatchingDao,
 ): LocalMatchingRepository {
 
