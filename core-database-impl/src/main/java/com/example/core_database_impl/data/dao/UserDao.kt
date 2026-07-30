@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import androidx.room.Transaction
+import com.example.core_database_impl.data.entity.PhotoEntity
 import com.example.core_database_impl.data.entity.UserProfileEntity
 import com.example.core_database_impl.data.entity.relation.UserWithPhotos
 
@@ -21,4 +22,14 @@ internal interface UserDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun saveUser(userEntity: UserProfileEntity)
+
+    @Insert(onConflict = REPLACE)
+    suspend fun savePhotosForUser(photos: List<PhotoEntity>)
+
+    @Transaction
+    suspend fun insertUserWithPhotos(userWithPhotos: UserWithPhotos) {
+        saveUser(userWithPhotos.user)
+        savePhotosForUser(userWithPhotos.photos)
+    }
+
 }

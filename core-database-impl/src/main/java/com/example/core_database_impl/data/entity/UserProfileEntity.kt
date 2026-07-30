@@ -12,6 +12,8 @@ internal data class UserProfileEntity(
     val bio: String,
     val birthDate: String,
     val searchGender: String,
+    val isCurrentUser: Boolean,
+    val isCachedUser: Boolean,
 ) {
     companion object {
         const val USER_TABLE_NAME = "user_table"

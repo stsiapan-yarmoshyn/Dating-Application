@@ -1,6 +1,6 @@
 package com.example.core_database_api.data.model
 
-data class PhotoModel(
+data class LocalPhotoModel(
     val photoId: String,
     val photoUrl: String,
     val photoNumber: Int,

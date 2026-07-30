@@ -3,7 +3,7 @@ package com.example.core_remote_api.repository
 import com.example.core_remote_api.model.RemoteUserProfileModel
 import com.example.core_remote_api.model.RegistrationResponseModel
 
-interface UserRepository {
+interface RemoteUserRepository {
 
     suspend fun registerUser(user: RemoteUserProfileModel): Result<RegistrationResponseModel>
 

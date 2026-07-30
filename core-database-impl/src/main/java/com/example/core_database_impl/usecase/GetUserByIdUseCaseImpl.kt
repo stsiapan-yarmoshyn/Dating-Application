@@ -1,15 +1,15 @@
 package com.example.core_database_impl.usecase
 
-import com.example.core_database_api.data.model.UserProfileModel
-import com.example.core_database_api.data.repository.UserRepository
-import com.example.core_database_api.data.usecase.GetUserByIdUseCase
+import com.example.core_database_api.data.model.LocalUserProfileModel
+import com.example.core_database_api.data.repository.LocalUserRepository
+import com.example.core_database_api.data.usecase.user.GetUserByIdUseCase
 import javax.inject.Inject
 
 internal class GetUserByIdUseCaseImpl @Inject constructor(
-    private val repository: UserRepository
+    private val repository: LocalUserRepository
 ): GetUserByIdUseCase {
 
-    override suspend operator fun invoke(id: Int): UserProfileModel {
+    override suspend operator fun invoke(id: Int): LocalUserProfileModel {
         return repository.getUserById(id)
     }
 

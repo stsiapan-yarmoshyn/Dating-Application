@@ -24,4 +24,7 @@ internal object DbModule {
 
     @Provides
     fun provideUserDao(database: AppDatabase) = database.getUserDao()
+
+    @Provides
+    fun provideMatchingDao(database: AppDatabase) = database.getMatchingDao()
 }
