@@ -4,7 +4,6 @@ plugins {
     kotlin("multiplatform")
     alias(libs.plugins.android.library)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.dagger.hilt)
 }
 
 kotlin {
@@ -24,6 +23,7 @@ kotlin {
                 implementation(libs.androidx.room.runtime)
                 // Обязательный KMP SQLite драйвер для Room (bundled)
                 implementation(libs.androidx.sqlite.bundled)
+                implementation(libs.koin.core)
             }
         }
 
@@ -38,8 +38,6 @@ kotlin {
                 implementation(libs.androidx.room.ktx)
                 implementation(libs.androidx.room.paging)
 
-                // Hilt работает ТОЛЬКО внутри androidMain
-                implementation(libs.hilt.android)
             }
         }
 
@@ -83,7 +81,4 @@ android {
 dependencies {
     // Компилятор Room для общего кода (генерирует Dao и базы данных под KMP)
     add("kspCommonMainMetadata", libs.androidx.room.compiler)
-
-    // Компилятор Hilt для Android-части
-    ksp(libs.hilt.android.compiler)
 }

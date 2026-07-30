@@ -1,6 +1,5 @@
 package com.example.core_remote_api.usecase.user
 
-import com.example.core_remote_api.model.RegistrationResponseModel
 import com.example.core_remote_api.model.RemoteUserProfileModel
 
 interface GetMatchingUsersUseCase {

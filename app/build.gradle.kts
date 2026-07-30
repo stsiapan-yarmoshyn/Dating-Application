@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -37,14 +38,23 @@ android {
     }
 }
 
-dependencies {
-    implementation(project(":feature-registration-api"))
-    implementation(project(":feature-login-api"))
-    implementation(project(":feature-matching-api"))
-    implementation(project(":feature-chat-api"))
-    implementation(project(":core-remote-api"))
-    implementation(project(":core-notification-api"))
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) // или JVM_17, если используете Java 17
+    }
+}
 
+//subprojects {
+//    configurations.configureEach {
+//        resolutionStrategy {
+//            force("androidx.activity:activity:1.9.0")
+//            force("androidx.activity:activity-ktx:1.9.0")
+//        }
+//    }
+//}
+
+dependencies {
+    implementation(project(":shared"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -61,4 +71,10 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+
 }

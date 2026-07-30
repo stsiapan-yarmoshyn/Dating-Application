@@ -4,8 +4,7 @@ import java.util.Properties
 plugins {
     kotlin("multiplatform")
     alias(libs.plugins.android.library)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.buildKonfig)
 }
 
 val localProperties = Properties()
@@ -17,7 +16,7 @@ if (localPropertiesFile.exists()) {
 }
 
 kotlin {
-    // Настрока android и desctop платформ
+    // Настрока android и desktop платформ
     androidTarget() {
         compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
     }
@@ -34,6 +33,8 @@ kotlin {
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.ktor.client.logging)
+                implementation(libs.koin.core)
+                implementation(libs.ktor.client.cio)
             }
         }
 
@@ -43,9 +44,6 @@ kotlin {
                 implementation(libs.androidx.core.ktx)
                 implementation(libs.androidx.appcompat)
                 implementation(libs.material)
-
-                // Hilt работает ТОЛЬКО внутри androidMain
-                implementation(libs.hilt.android)
 
                 // Пока мы не переписали весь код на Ktor, Retrofit временно поживет тут
                 implementation(libs.retrofit)
@@ -66,7 +64,7 @@ kotlin {
 }
 
 //replace by extensions.configure<com.android.build.api.dsl.LibraryExtension>  ???
-android {
+extensions.configure<com.android.build.api.dsl.LibraryExtension> {
     namespace = "com.example.core_remote_impl"
 
 
@@ -80,60 +78,37 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            buildConfigField(
-                "String",
-                "BACKENDLESS_APP_KEY",
-                "\"${localProperties.getProperty("BACKENDLESS_APP_KEY")}\""
-            )
-            buildConfigField(
-                "String",
-                "BACKENDLESS_BASE_URL",
-                "\"${localProperties.getProperty("BACKENDLESS_BASE_URL")}\""
-            )
-        }
-        debug {
-            buildConfigField(
-                "String",
-                "BACKENDLESS_APP_KEY",
-                "\"${localProperties.getProperty("BACKENDLESS_APP_KEY")}\""
-            )
-            buildConfigField(
-                "String",
-                "BACKENDLESS_BASE_URL",
-                "\"${localProperties.getProperty("BACKENDLESS_BASE_URL")}\""
-            )
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    buildFeatures {
-        buildConfig = true
+}
+
+buildkonfig {
+    packageName = "com.example.core_remote_impl"
+
+    // Если у вас в gradle.properties настроен флавор (например, buildkonfig.flavor=dev)
+    defaultConfigs {
+        // STRING берется напрямую из импорта вверху страницы
+            buildConfigField(
+                com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+                "BACKENDLESS_APP_KEY",
+                "\"${localProperties.getProperty("BACKENDLESS_APP_KEY")}\""
+            )
+            buildConfigField(
+                com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
+                "BACKENDLESS_BASE_URL",
+                "\"${localProperties.getProperty("BACKENDLESS_BASE_URL")}\""
+            )
     }
 }
 
 dependencies {
 
     implementation(project(":core-remote-api"))
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    //Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
 
     //Retrofit
     implementation(libs.retrofit)

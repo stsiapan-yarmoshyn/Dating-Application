@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 
 //Убрать internal?
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-internal expect class RoomDatabaseFactory {
+internal expect class RoomDatabaseFactory() {
     internal fun createBuilder(): RoomDatabase.Builder<AppDatabase>
 }
 
