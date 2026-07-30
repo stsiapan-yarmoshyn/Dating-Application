@@ -1,15 +1,54 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.ksp)
+    kotlin("multiplatform")
 }
 
 kotlin {
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) // или JVM_17, если используете Java 17
+    androidTarget() {
+        compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
+    }
+    jvm("desktop") {
+        compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
+    }
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(project(":feature-matching-api"))
+                implementation(project(":core-database-api"))
+                implementation(project(":core-remote-api"))
+                implementation(project(":core-notification-api"))
+
+                //Glide
+                implementation(libs.coil.compose)
+                implementation(libs.coil.network.ktor)
+
+                implementation(libs.kmpalette.core)
+
+                // Compose Multiplatform UI компоненты
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                // Официальная Jetpack ViewModel KMP
+                implementation(libs.androidx.lifecycle.viewmodel.compose)
+                implementation(libs.koin.compose)
+                implementation(libs.koin.core)
+                implementation(libs.koin.core.viewmodel)
+                implementation(libs.koin.compose.viewmodel)
+                implementation(libs.navigation3.ui)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+            }
+        }
     }
 }
 
@@ -36,41 +75,4 @@ configure<com.android.build.api.dsl.LibraryExtension> {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-}
-
-dependencies {
-    implementation(project(":feature-matching-api"))
-    implementation(project(":core-database-api"))
-    implementation(project(":core-remote-api"))
-    implementation(project(":core-notification-api"))
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.foundation)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-    implementation(libs.material)
-
-    //Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
-
-    //Glide
-    implementation(libs.glide)
-    implementation(libs.glide.compose)
-    ksp(libs.glide.ksp)
-
-    implementation(libs.androidx.palette.ktx)
 }
