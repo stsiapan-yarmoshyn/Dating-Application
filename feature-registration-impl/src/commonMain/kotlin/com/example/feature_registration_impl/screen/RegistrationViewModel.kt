@@ -14,6 +14,7 @@ import datingapplication.feature_registration_impl.generated.resources.name_erro
 import datingapplication.feature_registration_impl.generated.resources.password_error_text
 import datingapplication.feature_registration_impl.generated.resources.unknown_error_text
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
+import java.util.logging.Logger
 
 open class RegistrationViewModel(
     private val registerUserUseCase: FeatureRegistrationUseCase
@@ -43,32 +45,56 @@ open class RegistrationViewModel(
     fun handleIntent(event: RegistrationUiEvent) {
         when (event) {
             is RegistrationUiEvent.AboutChanged -> updateAbout(event.about)
-
             is RegistrationUiEvent.BirthDateChanged -> updateBirthday(event.millis)
-
             is RegistrationUiEvent.EmailChanged -> updateEmail(event.email)
-
             is RegistrationUiEvent.GenderChanged -> updateGender(event.gender)
-
             is RegistrationUiEvent.SearchGenderChanged -> updateSearchGender(event.gender)
-
             is RegistrationUiEvent.NameChanged -> updateName(event.name)
-
             is RegistrationUiEvent.PhotoUrlChanged -> updatePhotoUrl(event.index, event.url)
-
             is RegistrationUiEvent.AddPhotoField -> addPhotoField()
-
             is RegistrationUiEvent.RemovePhotoField -> removePhotoField(event.index)
-
             is RegistrationUiEvent.PasswordChanged -> updatePassword(event.password)
-
             is RegistrationUiEvent.Submit -> registerUser()
+
+            is RegistrationUiEvent.EmailFocusChanged -> onEmailFocusChanged(event.hasFocus)
+            is RegistrationUiEvent.NameFocusChanged -> onNameFocusChanged(event.hasFocus)
+            is RegistrationUiEvent.PasswordFocusChanged -> onPasswordFocusChanged(event.hasFocus)
         }
+    }
+
+    private fun onEmailFocusChanged(hasFocus: Boolean) {
+        _state.update { currentState ->
+            currentState.copy(
+                wasEmailFieldFocused =
+                    currentState.wasEmailFieldFocused || (currentState.isEmailFocused && !hasFocus),
+                isEmailFocused = hasFocus
+            )
+        }
+        validateForm()
+    }
+
+    private fun onPasswordFocusChanged(hasFocus: Boolean) {
+        _state.update { currentState ->
+            currentState.copy(
+                wasPasswordFieldFocused = currentState.wasPasswordFieldFocused || (currentState.isPasswordFocused && !hasFocus),
+                isPasswordFocused = hasFocus
+            )
+        }
+        validateForm()
+    }
+
+    private fun onNameFocusChanged(hasFocus: Boolean) {
+        _state.update { currentState ->
+            currentState.copy(
+                wasNameFieldFocused = currentState.wasNameFieldFocused || (currentState.isNameFocused && !hasFocus),
+                isNameFocused = hasFocus
+            )
+        }
+        validateForm()
     }
 
     private fun updateAbout(about: String) {
         _state.update { it.copy(aboutMe = about) }
-        validateForm()
     }
 
     private fun updateBirthday(millis: Long?) {
@@ -108,60 +134,78 @@ open class RegistrationViewModel(
 
     private fun removePhotoField(index: Int) {
         _state.update { state ->
-            val newList = state.photoUrls.toMutableList().apply { removeAt(index) }
+            val newList = state.photoUrls.toMutableList().apply {
+                if (index in indices) removeAt(index)
+            }
             state.copy(photoUrls = newList)
         }
         validateForm()
     }
 
     private fun updatePhotoUrl(index: Int, url: String) {
-        _state.update { state ->
-            val newList =
-                state.photoUrls.toMutableList().apply { set(index, url) }
-            state.copy(photoUrls = newList)
+        if (!url.isEmpty()) {
+            _state.update { state ->
+                val newList = state.photoUrls.toMutableList().apply {
+                    if (index in indices) set(index, url)
+                }
+                state.copy(photoUrls = newList)
+            }
         }
         validateForm()
     }
 
     private fun validateForm() {
-        val state = _state.value
-        val isValid = state.name.isNotBlank() &&
-                state.email.contains("@") &&
-                state.password.isNotBlank() &&
-                state.gender.isNotBlank() &&
-                state.searchGender.isNotBlank() &&
-                state.birthDateMillis != null
+        val currentState = _state.value
 
-        _state.update { it.copy(isFormValid = isValid) }
+        val emailError =
+            if (!isEmailValid(currentState.email)) UiTextUtil.StringResourceKmp(Res.string.email_error_text) else null
+        val passwordError =
+            if (!isPasswordValid(currentState.password)) UiTextUtil.StringResourceKmp(Res.string.password_error_text) else null
+        val nameError =
+            if (currentState.name.length < 2) UiTextUtil.StringResourceKmp(Res.string.name_error_text) else null
+
+        val isValid = emailError == null &&
+                nameError == null &&
+                passwordError == null &&
+                currentState.gender.isNotBlank() &&
+                currentState.searchGender.isNotBlank() &&
+                currentState.birthDateMillis != null
+
+        _state.update {
+            it.copy(
+                emailError = emailError,
+                passwordError = passwordError,
+                nameError = nameError,
+                isFormValid = isValid
+            )
+        }
     }
 
     private fun registerUser() {
-
-        val state = _state.value
-        var hasError = false
-
-        if (state.name.length < 2) {
-            _state.update { it.copy(nameError = UiTextUtil.StringResourceKmp(Res.string.name_error_text)) }
-            hasError = true
-        }
-        if (!isEmailValid(state.email)) {
-            _state.update { it.copy(emailError = UiTextUtil.StringResourceKmp(Res.string.email_error_text)) }
-            hasError = true
-        }
-        if (!isPasswordValid(state.password)) {
-            _state.update { it.copy(passwordError = UiTextUtil.StringResourceKmp(Res.string.password_error_text)) }
-            hasError = true
+        // При попытке сабмита — помечаем все поля как "тронутые", чтобы ошибки подсветились
+        _state.update {
+            it.copy(
+                wasNameFieldFocused = true,
+                wasEmailFieldFocused = true,
+                wasPasswordFieldFocused = true
+            )
         }
 
-        if (hasError) return
+        validateForm()
+
+        val currentState = _state.value
+        if (!currentState.isFormValid) return
+
         _state.update { it.copy(isLoading = true) }
 
         viewModelScope.launch(Dispatchers.IO) {
-            val result = registerUserUseCase(state.toFeatureModel())
+            val result = registerUserUseCase(currentState.toFeatureModel())
             result.onSuccess {
+                _state.update { it.copy(isLoading = true) }
                 _effect.send(RegistrationEffect.Success)
                 //navigationDispatcher.emit(NavigateToLoginScreen(it.userId))
             }.onFailure { error ->
+                _state.update { it.copy(isLoading = false) }
                 _effect.send(
                     RegistrationEffect.NetworkError(
                         if (error.message.isNullOrEmpty()) {
@@ -185,7 +229,7 @@ open class RegistrationViewModel(
 
     companion object {
         private const val PASSWORD_REGEX_STRING =
-            "^(?=.*[A-Za-zА-Яа-я])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-zА-Яа-я\\d@\$!%*?&]{8,}\$"
+            "^(?=.*[A-Za-zА-Яа-я])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-zА-Яа-я\\d@$!%*?&]{8,}\$"
         private const val EMAIL_REGEX_STRING =
             "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\$"
     }

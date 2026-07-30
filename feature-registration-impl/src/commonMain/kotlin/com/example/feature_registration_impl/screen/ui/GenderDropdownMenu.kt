@@ -63,6 +63,4 @@ fun GenderDropdownMenu(
         }
     }
 
-    Spacer(modifier = Modifier.padding(16.dp))
-
 }

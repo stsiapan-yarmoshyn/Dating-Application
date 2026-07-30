@@ -7,6 +7,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.unit.dp
 import datingapplication.feature_registration_impl.generated.resources.Res
 import datingapplication.feature_registration_impl.generated.resources.about_text
@@ -26,7 +27,4 @@ fun BioTextField(
         maxLines = 5,
         modifier = Modifier.fillMaxWidth()
     )
-
-    Spacer(modifier = Modifier.padding(16.dp))
-
 }

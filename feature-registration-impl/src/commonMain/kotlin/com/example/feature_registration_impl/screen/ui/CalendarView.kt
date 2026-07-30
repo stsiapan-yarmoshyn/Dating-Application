@@ -47,7 +47,7 @@ fun CalendarView(
 
     OutlinedTextField(
         value = formatDate,
-        onValueChange = { onDateChanged(dateTimePickerState.selectedDateMillis) },
+        onValueChange = {  },
         label = { Text(stringResource(Res.string.date_of_birh_text)) },
         readOnly = true,
         trailingIcon = {
@@ -61,14 +61,15 @@ fun CalendarView(
         modifier = Modifier.fillMaxWidth()
     )
 
-    Spacer(modifier = Modifier.padding(16.dp))
-
     // Логика отображения диалога календаря
     if (showDatePicker) {
         DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
-                TextButton(onClick = { showDatePicker = false }) {
+                TextButton(onClick = {
+                    onDateChanged(dateTimePickerState.selectedDateMillis)
+                    showDatePicker = false
+                }) {
                     Text(stringResource(Res.string.ok_text))
                 }
             },

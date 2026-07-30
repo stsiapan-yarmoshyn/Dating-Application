@@ -5,6 +5,7 @@ plugins {
     kotlin("multiplatform")
     alias(libs.plugins.android.library)
     alias(libs.plugins.buildKonfig)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 val localProperties = Properties()
@@ -93,12 +94,12 @@ buildkonfig {
             buildConfigField(
                 com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
                 "BACKENDLESS_APP_KEY",
-                "\"${localProperties.getProperty("BACKENDLESS_APP_KEY")}\""
+                "${localProperties.getProperty("BACKENDLESS_APP_KEY")}"
             )
             buildConfigField(
                 com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING,
                 "BACKENDLESS_BASE_URL",
-                "\"${localProperties.getProperty("BACKENDLESS_BASE_URL")}\""
+                "${localProperties.getProperty("BACKENDLESS_BASE_URL")}"
             )
     }
 }

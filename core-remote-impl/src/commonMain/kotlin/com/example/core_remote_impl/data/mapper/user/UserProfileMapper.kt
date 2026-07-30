@@ -9,10 +9,10 @@ internal fun RemoteUserProfileModel.toUserRequestDto(): UserRequestDto {
     return UserRequestDto(
         password = this.password,
         email = this.email,
-        gender = this.gender,
+        gender = this.gender.lowercase(),
         birthDate = this.birthDate,
         bio = this.bio,
-        searchGender = this.searchGender,
+        searchGender = this.searchGender.lowercase(),
         name = this.name,
         photos = this.photos.toPhotDtoList(),
     )
