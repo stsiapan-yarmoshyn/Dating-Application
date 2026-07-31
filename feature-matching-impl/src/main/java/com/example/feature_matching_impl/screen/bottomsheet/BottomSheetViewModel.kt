@@ -1,0 +1,60 @@
+package com.example.feature_matching_impl.screen.bottomsheet
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+class BottomSheetViewModel @Inject constructor(
+
+) : ViewModel() {
+
+    private val _state = MutableStateFlow(BottomSheetState())
+    val state: StateFlow<BottomSheetState> = _state.asStateFlow()
+
+    fun handleIntent(
+        event: BottomSheetEvent
+    ) {
+        when(event) {
+            is BottomSheetEvent.OnShowBottomSheet -> {
+                onShowBottomSheet()
+            }
+            is BottomSheetEvent.OnCloseBottomSheet -> {
+                onCloseBottomSheet()
+            }
+
+            is BottomSheetEvent.ShowUserData -> {
+                showUserData(userId = event.userId)
+            }
+        }
+    }
+
+    private fun onCloseBottomSheet() {
+        _state.update {
+            it.copy(isBottomSheetOpen = false)
+        }
+    }
+
+    private fun onShowBottomSheet() {
+        _state.update {
+            it.copy(isBottomSheetOpen = true)
+        }
+    }
+
+    private fun showUserData(userId: String) {
+        //sent dispatcher higher
+        viewModelScope.launch(Dispatchers.IO) {
+            val user = Unit//TODO db.getUserById(userId)
+
+            _state.update {
+                it.copy(userName = user.name, userBio = user.bio, userPhotos = user.photos)
+            }
+        }
+    }
+
+}
