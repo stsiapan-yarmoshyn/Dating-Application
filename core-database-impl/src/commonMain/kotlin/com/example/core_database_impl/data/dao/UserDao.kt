@@ -18,7 +18,7 @@ internal interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM user_table WHERE userId = :id")
-    suspend fun getUserById(id: Int): UserWithPhotos
+    suspend fun getUserById(id: String): UserWithPhotos
 
     @Insert(onConflict = REPLACE)
     suspend fun saveUser(userEntity: UserProfileEntity)

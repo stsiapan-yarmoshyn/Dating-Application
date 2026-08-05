@@ -10,8 +10,8 @@ internal class UserRepositoryImpl(
     private val userDao: UserDao
 ): LocalUserRepository {
 
-    override suspend fun getUserById(id: Int): LocalUserProfileModel {
-        return userDao.getUserById(id).toDomain()
+    override suspend fun getUserById(id: String): Result<LocalUserProfileModel> {
+        return runCatching { userDao.getUserById(id).toDomain() }
     }
 
     override suspend fun getUserByEmail(email: String): LocalUserProfileModel {

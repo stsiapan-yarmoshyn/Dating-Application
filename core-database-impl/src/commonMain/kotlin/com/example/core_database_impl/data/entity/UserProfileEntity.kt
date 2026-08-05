@@ -10,7 +10,7 @@ internal data class UserProfileEntity(
     val gender: String,
     val email: String,
     val bio: String,
-    val birthDate: String,
+    val birthDate: Long,
     val searchGender: String,
     val isCurrentUser: Boolean,
     val isCachedUser: Boolean,

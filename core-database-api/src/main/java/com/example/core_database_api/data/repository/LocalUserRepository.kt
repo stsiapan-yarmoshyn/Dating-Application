@@ -4,7 +4,7 @@ import com.example.core_database_api.data.model.LocalUserProfileModel
 
 interface LocalUserRepository {
 
-    suspend fun getUserById(id: Int): LocalUserProfileModel
+    suspend fun getUserById(id: String): Result<LocalUserProfileModel>
 
     suspend fun getUserByEmail(email: String): LocalUserProfileModel
 

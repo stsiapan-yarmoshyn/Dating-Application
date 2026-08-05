@@ -6,7 +6,7 @@ data class LocalUserProfileModel(
     val gender: String,
     val email: String,
     val bio: String,
-    val birthDate: String,
+    val birthDate: Long,
     val photos: List<LocalPhotoModel>,
     val searchGender: String,
 )

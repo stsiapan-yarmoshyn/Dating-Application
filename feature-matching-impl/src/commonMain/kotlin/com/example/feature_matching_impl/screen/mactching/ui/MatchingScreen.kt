@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.feature_matching_impl.screen.SwipeDirection
@@ -30,13 +29,18 @@ import com.example.feature_matching_impl.screen.mactching.ui.card.SwipeableCardC
 import com.example.feature_matching_impl.screen.mactching.ui.card.UserCardView
 import com.example.feature_matching_impl.screen.mactching.ui.footer.FooterView
 import com.example.feature_matching_impl.screen.mactching.ui.header.HeaderView
+import com.example.feature_matching_impl.screen.mactching.user
 import kotlinx.coroutines.flow.filter
 import kotlin.math.abs
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MatchingScreen(
-    matchingViewModel: MatchingViewModel
+    matchingViewModel: MatchingViewModel,
+    navigateToDetails: (String) -> Unit,
+    navigateToChat: (String) -> Unit,
+    navigateToProfile: (String) -> Unit,
+    navigateToMatching: () -> Unit,
 ) {
     val state by matchingViewModel.state.collectAsStateWithLifecycle()
     val containerWidthPx = LocalWindowInfo.current.containerSize.width.toFloat()
@@ -47,9 +51,15 @@ fun MatchingScreen(
     ) {
 
         HeaderView(
-            onChatClick = {},
-            onProfileClick = {},
-            onMatchingClick = {}
+            onChatClick = {
+                navigateToChat
+            },
+            onProfileClick = {
+                navigateToProfile
+            },
+            onMatchingClick = {
+                navigateToMatching
+            }
         )
 
         Box(
@@ -116,8 +126,8 @@ fun MatchingScreen(
                     ) {
                         UserCardView(
                             user = nextUser,
-                            onInfoClick = {
-                                //TODO -> navigate to bottom sheet (send userID)
+                            onInfoClick = { userId ->
+                                navigateToDetails(userId)
                             },
                         )
                     }
@@ -130,8 +140,8 @@ fun MatchingScreen(
                     ) {
                         UserCardView(
                             user = currentUser,
-                            onInfoClick = {
-                                //TODO -> navigate to bottom sheet (send userID)
+                            onInfoClick = { userId ->
+                                navigateToDetails(userId)
                             },
                         )
                     }
@@ -154,11 +164,4 @@ fun MatchingScreen(
             }
         )
     }
-}
-
-//@LightAndDarkPreview
-@Preview
-@Composable
-fun MatchingScreenPreview() {
-    //MatchingScreen()
 }

@@ -23,7 +23,7 @@ import com.example.feature_matching_impl.screen.mactching.ui.card.top.TopCardInd
 @Composable
 fun UserCardView(
     user: UserProfileModel,
-    onInfoClick: () -> Unit,
+    onInfoClick: (String) -> Unit,
 ) {
 
     var imageIndex by remember { mutableIntStateOf(0) }
@@ -60,7 +60,7 @@ fun UserCardView(
             user = user,
             modifier = Modifier.align(Alignment.BottomEnd)
         ) {
-            onInfoClick()
+            onInfoClick(user.userId)
         }
     }
 }

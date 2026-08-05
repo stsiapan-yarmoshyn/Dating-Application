@@ -8,7 +8,7 @@ internal class GetUserByIdUseCaseImpl(
     private val repository: LocalUserRepository
 ): GetUserByIdUseCase {
 
-    override suspend operator fun invoke(id: Int): LocalUserProfileModel {
+    override suspend operator fun invoke(id: String): Result<LocalUserProfileModel> {
         return repository.getUserById(id)
     }
 
