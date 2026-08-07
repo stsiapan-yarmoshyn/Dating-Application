@@ -3,20 +3,22 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
 }
 
-android {
-    namespace = "com.example.feature_login_impl"
-    compileSdk {
-        version = release(36)
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) // или JVM_17, если используете Java 17
     }
+}
+
+configure<com.android.build.api.dsl.LibraryExtension> {
+    namespace = "com.example.feature_login_impl"
+    compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.feature_login_impl"
         minSdk = 24
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

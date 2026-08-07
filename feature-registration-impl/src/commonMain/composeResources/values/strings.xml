@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">feature-registration-impl</string>
+
+    <string name="register_header_text">Create account</string>
+    <string name="register_text">Register</string>
+    <string name="already_have_account_text">Already have an account? Login</string>
+
+    <string name="about_text">About</string>
+
+    <string name="ok_text">OK</string>
+    <string name="cancel_text">Cancel</string>
+
+    <string name="date_of_birh_text">Date of birth</string>
+    <string name="select_date_text">Select date</string>
+
+    <string name="email_text">Email</string>
+
+    <string name="gender_text">Gender</string>
+    <string name="gender_male_text">Male</string>
+    <string name="gender_female_text">Female</string>
+    <string name="gender_other_text">Other</string>
+
+    <string name="name_text">Name</string>
+
+    <string name="password_text">Password</string>
+    <string name="password_show_text">Show password</string>
+    <string name="password_hide_text">Hide password</string>"
+
+    <string name="photo_list_text">Photo links</string>
+    <string name="photo_link_text">Photo link №</string>
+    <string name="add_link_text">Add another link</string>
+    <string name="delete_link_field_text">Delete link field</string>
+
+    <string name="name_error_text">The name must contain at least 2 characters</string>
+    <string name="email_error_text">Incorrect email</string>
+    <string name="password_error_text">The password must be at least 8 characters long and contain letters, numbers, and special characters</string>
+    <string name="unknown_error_text">Unknown error</string>
+
+</resources>
