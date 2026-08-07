@@ -10,6 +10,8 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.example.feature_matching_api.navigation.MatchingRoute
+import com.example.feature_matching_impl.navigation.matchingGraph
 import com.example.feature_registration_api.navigation.RegistrationRoute
 import com.example.feature_registration_impl.navigation.registrationGraph
 import kotlinx.serialization.modules.SerializersModule
@@ -23,8 +25,9 @@ fun App() {
         SavedStateConfiguration {
             serializersModule = SerializersModule {
                 polymorphic(NavKey::class) {
-                    // Перечисляем базовые интерфейсы роутов из всех ваших *-api модулей
                     subclass(RegistrationRoute.Main::class)
+                    subclass(MatchingRoute.Main::class)
+                    subclass(MatchingRoute.Details::class)
                 }
             }
         }
@@ -42,9 +45,23 @@ fun App() {
             onBack = { backStack.removeLastOrNull() },
             entryProvider = entryProvider {
                 // Подключаем графы из разных impl-модулей
-                registrationGraph { route ->
-                    backStack.add(route)
-                }
+                registrationGraph(
+                    navigateToLogin = {
+                        //backStack.add(LoginRoute.Main)
+                    }
+                )
+                matchingGraph(
+                    backStack = backStack,
+                    navigateToChat = {
+                        //backStack.add(ChatRoute.Main)
+                    },
+                    navigateToProfile = {
+                        //backStack.add(ProfileRoute.Main)
+                    },
+                    navigateToMatching = {
+                        //backStack.add(ProfileRoute.Main)
+                    }
+                )
             },
             entryDecorators = listOf(
                 rememberSaveableStateHolderNavEntryDecorator(),

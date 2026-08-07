@@ -6,6 +6,7 @@ import com.example.core_database_impl.data.di.databaseUseCaseModule
 import com.example.core_remote_impl.di.networkModule
 import com.example.core_remote_impl.di.networkRepositoryModule
 import com.example.core_remote_impl.di.networkUseCaseModule
+import com.example.feature_matching_impl.di.matchingModule
 import com.example.feature_registration_impl.di.registrationModule
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -16,8 +17,8 @@ val appModules = listOf<Module>(
     networkModule, networkRepositoryModule, networkUseCaseModule,
     //Database
     databaseModule, databaseRepositoryModule, databaseUseCaseModule,
-    //Registration
-    registrationModule
+    //Feature
+    registrationModule, matchingModule
 )
 
 fun initKoin(config: KoinAppDeclaration? = null) {

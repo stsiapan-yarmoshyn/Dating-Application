@@ -2,7 +2,7 @@ package com.example.core_remote_impl.data.repository
 
 import com.example.core_remote_api.model.RegistrationResponseModel
 import com.example.core_remote_api.model.RemoteUserProfileModel
-import com.example.core_remote_api.repository.UserRepository
+import com.example.core_remote_api.repository.RemoteUserRepository
 import com.example.core_remote_impl.data.mapper.user.toRegisterResponse
 import com.example.core_remote_impl.data.mapper.user.toUserProfileList
 import com.example.core_remote_impl.data.mapper.user.toUserProfileModel
@@ -12,7 +12,7 @@ import com.example.core_remote_impl.data.network.UserServiceApi
 
 internal class UserRepositoryImpl(
     private val userServiceApi: UserServiceApi
-) : UserRepository {
+) : RemoteUserRepository {
 
     override suspend fun registerUser(user: RemoteUserProfileModel): Result<RegistrationResponseModel> {
         return runCatching {

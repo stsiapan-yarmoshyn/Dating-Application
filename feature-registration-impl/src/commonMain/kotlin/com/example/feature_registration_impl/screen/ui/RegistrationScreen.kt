@@ -41,7 +41,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun RegistrationScreen(
     registrationViewModel: RegistrationViewModel,
-    onNavigateToDetails: (String) -> Unit
+    onNavigateToLogin: (String) -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val state by registrationViewModel.state.collectAsState()
@@ -60,7 +60,7 @@ fun RegistrationScreen(
 
                 is RegistrationEffect.Success -> {
                     snackbarHostState.showSnackbar("Success")
-                    onNavigateToDetails("")
+                    onNavigateToLogin("")
                 }
             }
         }
