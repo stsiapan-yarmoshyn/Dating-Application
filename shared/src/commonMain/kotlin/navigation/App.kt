@@ -10,6 +10,8 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.example.feature_login_api.navigation.LoginRoute
+import com.example.feature_login_impl.navigation.loginGraph
 import com.example.feature_matching_api.navigation.MatchingRoute
 import com.example.feature_matching_impl.navigation.matchingGraph
 import com.example.feature_registration_api.navigation.RegistrationRoute
@@ -28,6 +30,7 @@ fun App() {
                     subclass(RegistrationRoute.Main::class)
                     subclass(MatchingRoute.Main::class)
                     subclass(MatchingRoute.Details::class)
+                    subclass(LoginRoute.Main::class)
                 }
             }
         }
@@ -36,7 +39,7 @@ fun App() {
     val backStack =
         rememberNavBackStack(
             configuration = navConfig,
-            elements = arrayOf(RegistrationRoute.Main)
+            elements = arrayOf(LoginRoute.Main)
         )
 
     MaterialTheme {
@@ -47,7 +50,7 @@ fun App() {
                 // Подключаем графы из разных impl-модулей
                 registrationGraph(
                     navigateToLogin = {
-                        //backStack.add(LoginRoute.Main)
+                        backStack.add(LoginRoute.Main)
                     }
                 )
                 matchingGraph(
@@ -62,6 +65,9 @@ fun App() {
                         //backStack.add(ProfileRoute.Main)
                     }
                 )
+                loginGraph {
+                    backStack.add(MatchingRoute.Main)
+                }
             },
             entryDecorators = listOf(
                 rememberSaveableStateHolderNavEntryDecorator(),

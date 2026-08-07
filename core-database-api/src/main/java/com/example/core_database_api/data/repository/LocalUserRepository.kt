@@ -8,6 +8,6 @@ interface LocalUserRepository {
 
     suspend fun getUserByEmail(email: String): LocalUserProfileModel
 
-    suspend fun saveUser(user: LocalUserProfileModel)
+    suspend fun saveUser(user: LocalUserProfileModel): Result<Unit>
 
 }

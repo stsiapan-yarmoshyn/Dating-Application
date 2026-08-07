@@ -18,7 +18,9 @@ internal class UserRepositoryImpl(
         return userDao.getUserByEmail(email).toDomain()
     }
 
-    override suspend fun saveUser(user: LocalUserProfileModel) {
-        userDao.insertUserWithPhotos(user.toEntityWithPhotos(isCurrentUser = true))
+    override suspend fun saveUser(user: LocalUserProfileModel): Result<Unit> {
+        return runCatching {
+            userDao.insertUserWithPhotos(user.toEntityWithPhotos(isCurrentUser = true))
+        }
     }
 }

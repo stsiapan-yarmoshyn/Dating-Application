@@ -1,6 +1,7 @@
 package com.example.core_remote_api.model
 
 data class RemoteUserProfileModel(
+    val userId: String,
     val name: String,
     val gender: String,
     val email: String,

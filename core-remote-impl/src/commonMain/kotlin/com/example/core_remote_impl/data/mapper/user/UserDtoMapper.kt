@@ -6,12 +6,13 @@ import com.example.core_remote_impl.data.model.UserResponseDto
 
 internal fun UserResponseDto.toUserProfileModel(): RemoteUserProfileModel {
     return RemoteUserProfileModel(
+        userId = userId,
         name = name,
         gender = gender,
         email = email,
         bio = bio,
         birthDate = birthDate,
-        photos = photos.toPhotoModelList(),
+        photos = photos.toPhotoModelList(userId),
         searchGender = searchGender,
         lastLogin = lastLogin,
         created = created,

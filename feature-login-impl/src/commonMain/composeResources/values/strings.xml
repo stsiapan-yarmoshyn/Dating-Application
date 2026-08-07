@@ -1,0 +1,16 @@
+<resources>
+    <string name="welcome_text">Welcome</string>
+
+    <string name="email_field_text">Enter your Email</string>
+
+    <string name="user_icon_description">User icon</string>
+
+    <string name="password_show_text">Show password</string>
+    <string name="password_hide_text">Hide password</string>
+    <string name="password_field_text">Password</string>
+    <string name="password_icon_description">Password icon</string>
+
+    <string name="enter_btn_text">Enter</string>
+
+    <string name="unknown_error_text">Unknown error</string>
+</resources>

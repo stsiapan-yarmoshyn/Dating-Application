@@ -32,6 +32,9 @@ kotlin {
             implementation(project(":feature-matching-api"))
             implementation(project(":feature-matching-impl"))
 
+            implementation(project(":feature-login-api"))
+            implementation(project(":feature-login-impl"))
+
             implementation(libs.koin.core)
             implementation(libs.navigation3.ui)
             implementation(libs.koin.compose.navigation3)
