@@ -5,6 +5,7 @@ import com.example.feature_registration_api.model.UserProfileModel
 
 fun UserProfileModel.toDomain(): RemoteUserProfileModel {
     return RemoteUserProfileModel(
+        userId = this.userId,
         name = this.name,
         gender = this.gender,
         searchGender = this.searchGender,

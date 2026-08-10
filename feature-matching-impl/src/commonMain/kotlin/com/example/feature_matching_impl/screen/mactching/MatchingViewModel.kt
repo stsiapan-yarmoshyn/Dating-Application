@@ -17,10 +17,10 @@ import kotlinx.coroutines.launch
 //TODO -> delete mock data
 //mock user 1
 val user = UserProfileModel(
+    userId = "0",
     name = "Sarah, 24",
     gender = "",
     email = "sara@fff",
-    password = "",
     bio = "UI/UX Designer who runs on iced matchas and design deadlines. When I am not pushing pixels, I am exploring hiking trails or cataloging thrift stores.",
     birthDate = 0,
     photos = listOf(
@@ -33,10 +33,10 @@ val user = UserProfileModel(
 
 //Mock user 2
 val user2 = UserProfileModel(
+    userId = "1",
     name = "Maks, 24",
     gender = "",
     email = "Maks@ggg",
-    password = "",
     bio = "When I am not pushing pixels, I am exploring hiking trails or cataloging thrift stores.",
     birthDate = 0,
     photos = listOf(
@@ -49,10 +49,10 @@ val user2 = UserProfileModel(
 
 //Mock user 3
 val user3 = UserProfileModel(
+    userId = "3",
     name = "Eugene, 24",
     gender = "",
     email = "Eugene@jjj",
-    password = "",
     bio = "Test test test tes.",
     birthDate = 0,
     photos = listOf(

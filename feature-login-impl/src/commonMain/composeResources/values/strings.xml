@@ -13,4 +13,6 @@
     <string name="enter_btn_text">Enter</string>
 
     <string name="unknown_error_text">Unknown error</string>
+
+    <string name="dont_have_account_text">Don't have an account? Register</string>
 </resources>

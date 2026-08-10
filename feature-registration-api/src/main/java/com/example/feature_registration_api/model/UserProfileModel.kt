@@ -1,6 +1,7 @@
 package com.example.feature_registration_api.model
 
 data class UserProfileModel (
+    val userId: String,
     val name: String,
     val gender: String,
     val email: String,

@@ -13,4 +13,6 @@
     <string name="enter_btn_text">Войти</string>
 
     <string name="unknown_error_text">Неизвестная ошибка</string>
+
+    <string name="dont_have_account_text">Нет аккаунта? Зарегистрироваться</string>
 </resources>

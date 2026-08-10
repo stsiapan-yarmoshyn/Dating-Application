@@ -9,12 +9,14 @@ import org.koin.compose.viewmodel.koinViewModel
 
 fun EntryProviderScope<NavKey>.loginGraph(
     navigateToMatching: () -> Unit,
+    navigateToRegistration: () -> Unit,
 ) {
-    entry<LoginRoute.Main> {
+    entry<LoginRoute.LoginMain> {
         val viewModel = koinViewModel<LoginViewModel>()
         LoginScreen(
             loginViewModel = viewModel,
-            onNavigateToMatching = navigateToMatching
+            onNavigateToMatching = navigateToMatching,
+            onNavigateToRegistration = navigateToRegistration
         )
     }
 }

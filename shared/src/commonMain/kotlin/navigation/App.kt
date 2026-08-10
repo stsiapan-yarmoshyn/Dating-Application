@@ -27,10 +27,10 @@ fun App() {
         SavedStateConfiguration {
             serializersModule = SerializersModule {
                 polymorphic(NavKey::class) {
-                    subclass(RegistrationRoute.Main::class)
-                    subclass(MatchingRoute.Main::class)
-                    subclass(MatchingRoute.Details::class)
-                    subclass(LoginRoute.Main::class)
+                    subclass(RegistrationRoute.RegistrationMain::class, RegistrationRoute.RegistrationMain.serializer())
+                    subclass(MatchingRoute.MatchingMain::class, MatchingRoute.MatchingMain.serializer())
+                    subclass(MatchingRoute.MatchingDetails::class)
+                    subclass(LoginRoute.LoginMain::class)
                 }
             }
         }
@@ -39,7 +39,7 @@ fun App() {
     val backStack =
         rememberNavBackStack(
             configuration = navConfig,
-            elements = arrayOf(LoginRoute.Main)
+            elements = arrayOf(LoginRoute.LoginMain)
         )
 
     MaterialTheme {
@@ -50,7 +50,7 @@ fun App() {
                 // Подключаем графы из разных impl-модулей
                 registrationGraph(
                     navigateToLogin = {
-                        backStack.add(LoginRoute.Main)
+                        backStack.add(LoginRoute.LoginMain)
                     }
                 )
                 matchingGraph(
@@ -65,9 +65,14 @@ fun App() {
                         //backStack.add(ProfileRoute.Main)
                     }
                 )
-                loginGraph {
-                    backStack.add(MatchingRoute.Main)
-                }
+                loginGraph(
+                    navigateToRegistration = {
+                        backStack.add(RegistrationRoute.RegistrationMain)
+                    },
+                    navigateToMatching = {
+                        backStack.add(MatchingRoute.MatchingMain)
+                    }
+                )
             },
             entryDecorators = listOf(
                 rememberSaveableStateHolderNavEntryDecorator(),

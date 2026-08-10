@@ -167,14 +167,6 @@ fun RegistrationScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                TextButton(onClick = {}/*onLoginNavigation*/) {
-                    Text(
-                        stringResource(Res.string.already_have_account_text),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
             }
 
             LoadingOverlay(

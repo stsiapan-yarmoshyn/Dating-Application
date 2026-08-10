@@ -1,13 +1,16 @@
 package com.example.feature_matching_api.navigation
 
 import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-interface MatchingRoute: NavKey {
+sealed interface MatchingRoute: NavKey {
     @Serializable
-    data object Main: MatchingRoute
+    @SerialName("MatchingMain")
+    data object MatchingMain: MatchingRoute
 
     @Serializable
-    data class Details(val id: String): MatchingRoute
+    @SerialName("MatchingDetails")
+    data class MatchingDetails(val id: String): MatchingRoute
 }

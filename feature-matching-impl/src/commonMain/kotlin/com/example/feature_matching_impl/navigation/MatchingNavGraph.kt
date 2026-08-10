@@ -16,11 +16,11 @@ fun EntryProviderScope<NavKey>.matchingGraph(
     navigateToProfile: (String) -> Unit,
     navigateToMatching: () -> Unit,
 ) {
-    entry<MatchingRoute.Main> {
+    entry<MatchingRoute.MatchingMain> {
         val viewModel = koinViewModel<MatchingViewModel>()
         MatchingScreen(matchingViewModel = viewModel,
             navigateToDetails = { id ->
-                backStack.add(MatchingRoute.Details(id))
+                backStack.add(MatchingRoute.MatchingDetails(id))
             },
             navigateToChat = navigateToChat,
             navigateToProfile = navigateToProfile,
@@ -28,7 +28,7 @@ fun EntryProviderScope<NavKey>.matchingGraph(
         )
     }
 
-    entry<MatchingRoute.Details> {
+    entry<MatchingRoute.MatchingDetails> {
         val viewModel = koinViewModel<BottomSheetViewModel>()
         UserBottomSheet(bottomSheetViewModel = viewModel)
     }

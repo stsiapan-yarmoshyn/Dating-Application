@@ -10,7 +10,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun EntryProviderScope<NavKey>.registrationGraph(
     navigateToLogin: () -> Unit,
 ) {
-    entry<RegistrationRoute.Main> {
+    entry<RegistrationRoute.RegistrationMain> {
         val viewModel = koinViewModel<RegistrationViewModel>()
         RegistrationScreen(
             registrationViewModel = viewModel,
