@@ -32,7 +32,7 @@ val networkModule = module {
 
     single<UserServiceApi> {
         val client = createKtorClient(create())
-        UserServiceApi(client, baseUrl = BuildKonfig.BACKENDLESS_BASE_URL)
+        UserServiceApi(client)
     }
 
     single<PhotoApi> {

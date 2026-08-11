@@ -15,12 +15,11 @@ import io.ktor.http.contentType
 
 internal class UserServiceApi(
     private val client: HttpClient,
-    private val baseUrl: String
 ) {
 
     // 1. PUT запрос с телом
     suspend fun executeRegisterUserTransaction(request: UserRequestDto): UserResponseDto {
-        return client.put("$baseUrl/api/data/Users/deep-save") {
+        return client.put("api/data/Users/deep-save") {
             contentType(ContentType.Application.Json)
             setBody(request)
         }.body()
@@ -29,7 +28,7 @@ internal class UserServiceApi(
     //TODO get from headers 'user-token' value
     // 2. POST запрос с телом
     suspend fun loginUser(request: LoginData): UserResponseDto {
-        return client.post("$baseUrl/api/services/AuthService/loginWithRelations") {
+        return client.post("api/services/AuthService/loginWithRelations") {
             contentType(ContentType.Application.Json)
             setBody(request)
         }.body()
@@ -41,7 +40,7 @@ internal class UserServiceApi(
         pageSize: Int,
         offset: Int
     ): List<UserResponseDto> {
-        return client.get("$baseUrl/api/data/Users") {
+        return client.get("api/data/Users") {
             url {
                 parameters.append("where", whereClause)
                 parameters.append("pageSize", pageSize.toString())
@@ -52,6 +51,6 @@ internal class UserServiceApi(
 
     // 4. DELETE запрос с Path-переменной
     suspend fun deleteUser(id: String) {
-        client.delete("$baseUrl/api/data/Users/$id")
+        client.delete("api/data/Users/$id")
     }
 }
