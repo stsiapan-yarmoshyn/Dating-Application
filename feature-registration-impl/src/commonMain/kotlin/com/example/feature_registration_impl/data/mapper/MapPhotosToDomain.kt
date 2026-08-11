@@ -9,6 +9,8 @@ fun List<PhotoModel>.mapToDomainPhotos(): List<RemotePhotoModel> {
 
 fun PhotoModel.toDomain(): RemotePhotoModel {
     return RemotePhotoModel(
+        userCreatorId = "",
+        photoId = "",
         photoUrl = this.photoUrl,
         photoNumber = this.photoNumber,
     )

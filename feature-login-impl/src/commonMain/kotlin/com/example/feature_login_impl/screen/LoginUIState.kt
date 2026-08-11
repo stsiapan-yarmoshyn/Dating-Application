@@ -1,0 +1,8 @@
+package com.example.feature_login_impl.screen
+
+data class LoginUIState(
+    val email: String = "",
+    val password: String = "",
+    val isLoading: Boolean = false,
+    val isButtonEnabled: Boolean = false,
+)

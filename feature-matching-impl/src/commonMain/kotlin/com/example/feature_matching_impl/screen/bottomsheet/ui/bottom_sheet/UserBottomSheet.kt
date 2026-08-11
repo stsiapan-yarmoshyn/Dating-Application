@@ -1,0 +1,94 @@
+package com.example.feature_matching_impl.screen.bottomsheet.ui.bottom_sheet
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.feature_matching_impl.screen.bottomsheet.BottomSheetEvent
+import com.example.feature_matching_impl.screen.bottomsheet.BottomSheetViewModel
+
+val DarkBg = Color(0xFF111625)
+val CardBg = Color(0xFF1A2035)
+val TextGray = Color(0xFF9A9EAA)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun UserBottomSheet(
+    bottomSheetViewModel: BottomSheetViewModel,
+) {
+
+    val state by bottomSheetViewModel.state.collectAsStateWithLifecycle()
+
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = false
+    )
+
+    if (state.isBottomSheetOpen) {
+        ModalBottomSheet(
+            onDismissRequest = {
+                bottomSheetViewModel.handleIntent(BottomSheetEvent.OnCloseBottomSheet)
+            },
+            sheetState = sheetState,
+            containerColor = DarkBg,
+            dragHandle = { BottomSheetDefaults.DragHandle(color = TextGray) }
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 20.dp, vertical = 10.dp)
+            ) {
+
+                BottomSheetHeader(
+                    mainText = state.userName,
+                    subtext = "Senior Designer at Figma",
+                    onDismiss = { bottomSheetViewModel.handleIntent(BottomSheetEvent.OnCloseBottomSheet) }
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    InfoCard(
+                        modifier = Modifier.weight(1f),
+                        title = "DISTANCE",
+                        value = "4 miles away",
+                    )
+                    InfoCard(
+                        modifier = Modifier.weight(1f),
+                        title = "PROFESSION",
+                        value = "Senior Designer",
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                AboutMeView(state.userBio)
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                PhotoListView(state.userPhotos)
+
+                Spacer(modifier = Modifier.height(32.dp))
+            }
+        }
+    }
+
+}

@@ -6,6 +6,10 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+ksp {
+    arg("room.schemaLocation", "${projectDir}/schemas")
+}
+
 kotlin {
     androidTarget() {
         compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
@@ -79,6 +83,12 @@ android {
 }
 
 dependencies {
-    // Компилятор Room для общего кода (генерирует Dao и базы данных под KMP)
+    // 1. Компилятор для общего кода (у вас уже есть)
     add("kspCommonMainMetadata", libs.androidx.room.compiler)
+
+    // 2. ДОБАВИТЬ: Компилятор для Android таргета
+    add("kspAndroid", libs.androidx.room.compiler)
+
+    // 3. ДОБАВИТЬ: Компилятор для Desktop (JVM) таргета
+    add("kspDesktop", libs.androidx.room.compiler)
 }

@@ -6,6 +6,7 @@ import com.example.feature_registration_impl.screen.RegistrationState
 
 fun RegistrationState.toFeatureModel(): UserProfileModel {
     return UserProfileModel(
+        userId = "",
         name = this.name,
         gender = this.gender,
         searchGender = this.searchGender,

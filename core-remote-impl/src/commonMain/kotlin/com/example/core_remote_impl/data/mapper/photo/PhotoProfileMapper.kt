@@ -3,8 +3,9 @@ package com.example.core_remote_impl.data.mapper.photo
 import com.example.core_remote_api.model.RemotePhotoModel
 import com.example.core_remote_impl.data.model.PhotoDto
 
-internal fun RemotePhotoModel.toPhotDtoList(orderIndex: Int): PhotoDto {
+internal fun RemotePhotoModel.toPhotDto(orderIndex: Int): PhotoDto {
     return PhotoDto(
+        photoId = this.photoId,
         photoUrl = this.photoUrl,
         orderIndex = orderIndex,
     )
@@ -12,6 +13,6 @@ internal fun RemotePhotoModel.toPhotDtoList(orderIndex: Int): PhotoDto {
 
 internal fun List<RemotePhotoModel>.toPhotDtoList(): List<PhotoDto> {
     return this.mapIndexed { index, photoModel ->
-        photoModel.toPhotDtoList(index)
+        photoModel.toPhotDto(index)
     }
 }

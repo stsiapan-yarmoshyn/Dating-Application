@@ -1,7 +1,7 @@
 package com.example.core_remote_impl.di
 
-import com.example.core_remote_api.repository.PhotoRepository
-import com.example.core_remote_api.repository.UserRepository
+import com.example.core_remote_api.repository.RemotePhotoRepository
+import com.example.core_remote_api.repository.RemoteUserRepository
 import com.example.core_remote_api.usecase.photo.AppendPhotosUseCase
 import com.example.core_remote_api.usecase.photo.DeletePhotosUseCase
 import com.example.core_remote_api.usecase.photo.GetPhotosUseCase
@@ -45,8 +45,8 @@ val networkModule = module {
 // ---- Repositories ----
 val networkRepositoryModule = module {
     // get() подставится автоматически для UserServiceApi/PhotoApi
-    singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
-    singleOf(::PhotoRepositoryImpl) { bind<PhotoRepository>() }
+    singleOf(::UserRepositoryImpl) { bind<RemoteUserRepository>() }
+    singleOf(::PhotoRepositoryImpl) { bind<RemotePhotoRepository>() }
 }
 
 // ---- Use Cases ----

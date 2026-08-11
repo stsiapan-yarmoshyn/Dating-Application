@@ -21,11 +21,19 @@ kotlin {
         commonMain.dependencies {
             // Ваши фичи и core-модули (написанные на KMP)
             implementation(project(":core-remote-api"))
-            implementation(project(":core-database-api"))
-            implementation(project(":feature-registration-api"))
             implementation(project(":core-remote-impl"))
+
+            implementation(project(":core-database-api"))
             implementation(project(":core-database-impl"))
+
+            implementation(project(":feature-registration-api"))
             implementation(project(":feature-registration-impl"))
+
+            implementation(project(":feature-matching-api"))
+            implementation(project(":feature-matching-impl"))
+
+            implementation(project(":feature-login-api"))
+            implementation(project(":feature-login-impl"))
 
             implementation(libs.koin.core)
             implementation(libs.navigation3.ui)

@@ -1,0 +1,18 @@
+<resources>
+    <string name="welcome_text">Добро пожаловать</string>
+
+    <string name="email_field_text">Введите ваш Email</string>
+
+    <string name="user_icon_description">Иконка пользователя</string>
+
+    <string name="password_show_text">Показать пароль</string>
+    <string name="password_hide_text">Спрятать пароль</string>
+    <string name="password_field_text">Пароль</string>
+    <string name="password_icon_description">Иконка пароля</string>
+
+    <string name="enter_btn_text">Войти</string>
+
+    <string name="unknown_error_text">Неизвестная ошибка</string>
+
+    <string name="dont_have_account_text">Нет аккаунта? Зарегистрироваться</string>
+</resources>

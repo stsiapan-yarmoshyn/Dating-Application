@@ -8,12 +8,13 @@ import com.example.feature_registration_impl.screen.ui.RegistrationScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 fun EntryProviderScope<NavKey>.registrationGraph(
-    onNavigate: (NavKey) -> Unit,
+    navigateToLogin: () -> Unit,
 ) {
-    entry<RegistrationRoute.Main> {
+    entry<RegistrationRoute.RegistrationMain> {
         val viewModel = koinViewModel<RegistrationViewModel>()
-        RegistrationScreen(registrationViewModel = viewModel, onNavigateToDetails = { id ->
-            //onNavigate(RegistrationRoute.Main(id))
-        })
+        RegistrationScreen(
+            registrationViewModel = viewModel,
+            onNavigateToLogin = { id -> navigateToLogin }
+        )
     }
 }
