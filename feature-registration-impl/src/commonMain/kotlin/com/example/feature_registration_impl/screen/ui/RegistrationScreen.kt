@@ -51,7 +51,7 @@ fun RegistrationScreen(
                 }
 
                 is RegistrationEffect.Success -> {
-                    snackbarHostState.showSnackbar("Success")
+                    uiState.snackbarHostState.showSnackbar("Success")
                     onNavigateToLogin("")
                 }
             }
