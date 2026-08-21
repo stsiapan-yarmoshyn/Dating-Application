@@ -14,9 +14,9 @@ import com.example.feature_matching_impl.di.matchingModule
 import com.example.feature_registration_impl.di.registrationModule
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
-import org.koin.core.module.dsl.viewModelOf
 import viewmodel.MainViewModel
 
 val shared = module {

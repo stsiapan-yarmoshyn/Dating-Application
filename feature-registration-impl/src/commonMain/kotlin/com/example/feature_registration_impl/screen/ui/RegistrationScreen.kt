@@ -15,7 +15,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -27,11 +26,9 @@ import com.example.feature_registration_impl.screen.RegistrationEffect
 import com.example.feature_registration_impl.screen.RegistrationViewModel
 import com.example.feature_registration_impl.screen.holder.rememberRegistrationState
 import datingapplication.feature_registration_impl.generated.resources.Res
-import datingapplication.feature_registration_impl.generated.resources.already_have_account_text
 import datingapplication.feature_registration_impl.generated.resources.register_header_text
 import datingapplication.feature_registration_impl.generated.resources.register_text
 import org.jetbrains.compose.resources.stringResource
-import java.util.logging.Logger
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

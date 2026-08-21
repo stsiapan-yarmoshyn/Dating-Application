@@ -2,10 +2,8 @@ package com.example.core_remote_impl.data.network
 
 import com.example.core_database_api.data.repository.SessionManager
 import io.ktor.client.plugins.api.createClientPlugin
-import io.ktor.client.request.header
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.encodedPath
-import kotlinx.coroutines.runBlocking
 
 val BackendlessAuthPlugin = createClientPlugin("BackendlessAuthPlugin", ::AuthPluginConfig) {
     val sessionManager = pluginConfig.sessionManager

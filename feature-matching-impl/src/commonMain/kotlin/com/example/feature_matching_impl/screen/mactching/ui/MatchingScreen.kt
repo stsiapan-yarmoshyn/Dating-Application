@@ -29,7 +29,6 @@ import com.example.feature_matching_impl.screen.mactching.ui.card.SwipeableCardC
 import com.example.feature_matching_impl.screen.mactching.ui.card.UserCardView
 import com.example.feature_matching_impl.screen.mactching.ui.footer.FooterView
 import com.example.feature_matching_impl.screen.mactching.ui.header.HeaderView
-import com.example.feature_matching_impl.screen.mactching.user
 import kotlinx.coroutines.flow.filter
 import kotlin.math.abs
 

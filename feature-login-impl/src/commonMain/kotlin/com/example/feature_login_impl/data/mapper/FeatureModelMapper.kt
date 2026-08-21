@@ -1,7 +1,6 @@
 package com.example.feature_login_impl.data.mapper
 
 import com.example.core_database_api.data.model.LocalUserProfileModel
-import com.example.core_remote_api.model.RemoteUserProfileModel
 import com.example.feature_login_api.model.UserProfileModel
 
 //fun UserProfileModel.toRemoteModel(): RemoteUserProfileModel {

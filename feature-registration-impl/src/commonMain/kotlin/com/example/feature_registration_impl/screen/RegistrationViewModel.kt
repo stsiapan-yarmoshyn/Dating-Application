@@ -14,7 +14,6 @@ import datingapplication.feature_registration_impl.generated.resources.name_erro
 import datingapplication.feature_registration_impl.generated.resources.password_error_text
 import datingapplication.feature_registration_impl.generated.resources.unknown_error_text
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +22,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
-import java.util.logging.Logger
 
 open class RegistrationViewModel(
     private val registerUserUseCase: FeatureRegistrationUseCase
