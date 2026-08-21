@@ -10,9 +10,9 @@ import com.example.core_database_impl.data.RoomDatabaseFactory
 import com.example.core_database_impl.data.createRoomDatabase
 import com.example.core_database_impl.data.repository.MatchingRepositoryImpl
 import com.example.core_database_impl.data.repository.UserRepositoryImpl
-import com.example.core_database_impl.usecase.GetUserByEmailUseCaseImpl
-import com.example.core_database_impl.usecase.GetUserByIdUseCaseImpl
-import com.example.core_database_impl.usecase.SaveUserUseCaseImpl
+import com.example.core_database_impl.usecase.user.GetUserByEmailUseCaseImpl
+import com.example.core_database_impl.usecase.user.GetUserByIdUseCaseImpl
+import com.example.core_database_impl.usecase.user.SaveUserUseCaseImpl
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf

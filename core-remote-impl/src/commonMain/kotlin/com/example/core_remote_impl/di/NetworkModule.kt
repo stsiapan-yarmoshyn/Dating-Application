@@ -6,6 +6,7 @@ import com.example.core_remote_api.usecase.photo.AppendPhotosUseCase
 import com.example.core_remote_api.usecase.photo.DeletePhotosUseCase
 import com.example.core_remote_api.usecase.photo.GetPhotosUseCase
 import com.example.core_remote_api.usecase.user.AuthenticateUserUseCase
+import com.example.core_remote_api.usecase.user.CheckTokenValidationUseCase
 import com.example.core_remote_api.usecase.user.DeleteUserUseCase
 import com.example.core_remote_api.usecase.user.GetMatchingUsersUseCase
 import com.example.core_remote_api.usecase.user.RegisterUserUseCase
@@ -19,6 +20,7 @@ import com.example.core_remote_impl.usecase.photo.AppendPhotosUseCaseImpl
 import com.example.core_remote_impl.usecase.photo.DeletePhotosUseCaseImpl
 import com.example.core_remote_impl.usecase.photo.GetPhotosUseCaseImpl
 import com.example.core_remote_impl.usecase.user.AuthenticateUserUseCaseImpl
+import com.example.core_remote_impl.usecase.user.CheckTokenValidationUseCaseImpl
 import com.example.core_remote_impl.usecase.user.DeleteUserUseCaseImpl
 import com.example.core_remote_impl.usecase.user.GetMatchingUsersUseCaseImpl
 import com.example.core_remote_impl.usecase.user.RegisterUserUseCaseImpl
@@ -31,12 +33,12 @@ import org.koin.dsl.module
 val networkModule = module {
 
     single<UserServiceApi> {
-        val client = createKtorClient(create())
+        val client = createKtorClient(create(), get())
         UserServiceApi(client)
     }
 
     single<PhotoApi> {
-        val client = createKtorClient(create())
+        val client = createKtorClient(create(), get())
         PhotoApi(client, baseUrl = BuildKonfig.BACKENDLESS_BASE_URL)
     }
 
@@ -55,6 +57,7 @@ val networkUseCaseModule = module {
     factoryOf(::RegisterUserUseCaseImpl) { bind<RegisterUserUseCase>() }
     factoryOf(::DeleteUserUseCaseImpl) { bind<DeleteUserUseCase>() }
     factoryOf(::GetMatchingUsersUseCaseImpl) { bind<GetMatchingUsersUseCase>() }
+    factoryOf(::CheckTokenValidationUseCaseImpl) { bind<CheckTokenValidationUseCase>() }
 
     factoryOf(::AppendPhotosUseCaseImpl) { bind<AppendPhotosUseCase>() }
     factoryOf(::DeletePhotosUseCaseImpl) { bind<DeletePhotosUseCase>() }

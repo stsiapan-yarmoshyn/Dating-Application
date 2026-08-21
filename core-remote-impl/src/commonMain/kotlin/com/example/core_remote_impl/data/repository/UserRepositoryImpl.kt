@@ -1,5 +1,6 @@
 package com.example.core_remote_impl.data.repository
 
+import com.example.core_database_api.data.repository.SessionManager
 import com.example.core_remote_api.model.RegistrationResponseModel
 import com.example.core_remote_api.model.RemoteUserProfileModel
 import com.example.core_remote_api.repository.RemoteUserRepository
@@ -11,7 +12,8 @@ import com.example.core_remote_impl.data.model.auth.LoginData
 import com.example.core_remote_impl.data.network.UserServiceApi
 
 internal class UserRepositoryImpl(
-    private val userServiceApi: UserServiceApi
+    private val userServiceApi: UserServiceApi,
+    private val sessionManager: SessionManager
 ) : RemoteUserRepository {
 
     override suspend fun registerUser(user: RemoteUserProfileModel): Result<RegistrationResponseModel> {
@@ -27,6 +29,9 @@ internal class UserRepositoryImpl(
     ): Result<RemoteUserProfileModel> {
         return runCatching {
             val result = userServiceApi.loginUser(LoginData(login, password))
+            result.userToken?.let {
+                sessionManager.saveUserToken(it)
+            }
             result.toUserProfileModel()
         }
     }
@@ -46,5 +51,9 @@ internal class UserRepositoryImpl(
             //Offset should be calculated by page size. Like offset += page size
             userServiceApi.getMatchingUser(whereClause, pageSize, offset).toUserProfileList()
         }
+    }
+
+    override suspend fun checkTokenValidation(): Result<Boolean> {
+        return runCatching {  userServiceApi.isValidUserToken() }
     }
 }

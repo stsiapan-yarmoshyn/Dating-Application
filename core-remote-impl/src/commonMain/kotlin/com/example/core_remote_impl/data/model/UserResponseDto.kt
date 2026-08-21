@@ -16,6 +16,7 @@ internal data class UserResponseDto(
     @SerialName("lastLogin") val lastLogin: Long? = null,
     @SerialName("userStatus") val userStatus: String? = null,
     @SerialName("created") val created: Long,
+    @SerialName("user-token") val userToken: String? = null,
     //@SerialName("oAuthIdentities") val oAuthIdentities: Any? = null, //TODO implement in future
     //@SerialName("location") val location: Any? = null, //TODO implement in future
 )

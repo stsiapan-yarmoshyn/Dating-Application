@@ -28,6 +28,7 @@ kotlin {
                 // Обязательный KMP SQLite драйвер для Room (bundled)
                 implementation(libs.androidx.sqlite.bundled)
                 implementation(libs.koin.core)
+                implementation("androidx.datastore:datastore-preferences:1.1.1")
             }
         }
 
@@ -41,6 +42,8 @@ kotlin {
                 // Room-компоненты, специфичные для Android
                 implementation(libs.androidx.room.ktx)
                 implementation(libs.androidx.room.paging)
+
+                implementation(libs.koin.android)
 
             }
         }

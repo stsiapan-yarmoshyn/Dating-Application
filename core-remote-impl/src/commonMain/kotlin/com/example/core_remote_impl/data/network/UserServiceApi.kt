@@ -53,4 +53,16 @@ internal class UserServiceApi(
     suspend fun deleteUser(id: String) {
         client.delete("api/data/Users/$id")
     }
+
+    suspend fun isValidUserToken(): Boolean {
+        return try {
+            // Делаем GET запрос к стандартному эндпоинту Backendless
+            val responseText: String = client.get("api/users/isvalidusertoken").body()
+            responseText.toBoolean()
+        } catch (e: Exception) {
+            // Если сеть лежит или сервер вернул ошибку (например, 400) — считаем токен невалидным
+            println("KtorClient: Token Failure: ${e.message}")
+            false
+        }
+    }
 }

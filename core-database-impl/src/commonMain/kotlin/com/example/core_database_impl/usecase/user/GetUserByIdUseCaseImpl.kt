@@ -1,4 +1,4 @@
-package com.example.core_database_impl.usecase
+package com.example.core_database_impl.usecase.user
 
 import com.example.core_database_api.data.model.LocalUserProfileModel
 import com.example.core_database_api.data.repository.LocalUserRepository

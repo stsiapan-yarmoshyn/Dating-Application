@@ -29,6 +29,7 @@ kotlin {
         // Общий код для Android и Desktop (Здесь Ktor)
         val commonMain by getting {
             dependencies {
+                implementation(project(":core-database-api"))//suspicious
                 implementation(project(":core-remote-api"))
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.content.negotiation)

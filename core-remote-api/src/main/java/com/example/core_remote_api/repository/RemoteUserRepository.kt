@@ -13,4 +13,6 @@ interface RemoteUserRepository {
 
     suspend fun getMatchingUsers(whereClause: String, pageSize: Int, offset: Int): Result<List<RemoteUserProfileModel>>
 
+    suspend fun checkTokenValidation(): Result<Boolean>
+
 }

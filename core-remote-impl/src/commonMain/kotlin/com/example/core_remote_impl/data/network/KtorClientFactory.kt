@@ -1,5 +1,6 @@
 package com.example.core_remote_impl.data.network
 
+import com.example.core_database_api.data.repository.SessionManager
 import com.example.core_remote_impl.BuildKonfig
 import io.ktor.client.*
 import io.ktor.client.engine.HttpClientEngine
@@ -8,9 +9,13 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 
-fun createKtorClient(engine: HttpClientEngine): HttpClient {
+fun createKtorClient(
+    engine: HttpClientEngine,
+    sessionManager: SessionManager
+): HttpClient {
     return HttpClient(engine) {
         defaultRequest {
             val baseUrl = BuildKonfig.BACKENDLESS_BASE_URL.let { url ->
@@ -34,6 +39,10 @@ fun createKtorClient(engine: HttpClientEngine): HttpClient {
                 }
             }
             level = LogLevel.BODY
+        }
+
+        install(BackendlessAuthPlugin) {
+            this.sessionManager = sessionManager
         }
     }
 }

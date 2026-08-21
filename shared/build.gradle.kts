@@ -36,6 +36,8 @@ kotlin {
             implementation(project(":feature-login-impl"))
 
             implementation(libs.koin.core)
+            implementation(libs.koin.core.viewmodel)
+            implementation(libs.koin.compose.viewmodel)
             implementation(libs.navigation3.ui)
             implementation(libs.koin.compose.navigation3)
             implementation(libs.koin.compose) // Для koinInject() в UI
